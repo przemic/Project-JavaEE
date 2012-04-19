@@ -4,7 +4,7 @@
  */
 package fascades;
 
-import entities.Group;
+import entities.Group1;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author przemic
  */
 @Stateless
-public class GroupFacade extends AbstractFacade<Group> {
+public class Group1Facade extends AbstractFacade<Group1> {
     @PersistenceContext(unitName = "com.mycompany_Project-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class GroupFacade extends AbstractFacade<Group> {
         return em;
     }
 
-    public GroupFacade() {
-        super(Group.class);
+    public Group1Facade() {
+        super(Group1.class);
     }
     
 }

@@ -52,7 +52,7 @@ public class User implements Serializable {
     private String login;
     @JoinColumn(name = "Group_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private Group groupid;
+    private Group1 groupid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
     private Collection<EventToUserAsoc> eventToUserAsocCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
@@ -113,11 +113,11 @@ public class User implements Serializable {
         this.login = login;
     }
 
-    public Group getGroupid() {
+    public Group1 getGroupid() {
         return groupid;
     }
 
-    public void setGroupid(Group groupid) {
+    public void setGroupid(Group1 groupid) {
         this.groupid = groupid;
     }
 

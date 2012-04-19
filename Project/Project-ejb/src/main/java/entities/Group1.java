@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Group1.findAll", query = "SELECT g FROM Group1 g"),
     @NamedQuery(name = "Group1.findById", query = "SELECT g FROM Group1 g WHERE g.id = :id")})
-public class Group implements Serializable {
+public class Group1 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -36,10 +36,10 @@ public class Group implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
     private Collection<User> userCollection;
 
-    public Group() {
+    public Group1() {
     }
 
-    public Group(Integer id) {
+    public Group1(Integer id) {
         this.id = id;
     }
 
@@ -78,10 +78,10 @@ public class Group implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Group)) {
+        if (!(object instanceof Group1)) {
             return false;
         }
-        Group other = (Group) object;
+        Group1 other = (Group1) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
