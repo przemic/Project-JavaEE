@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListEventToUserAsocTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListEventToUserAsocEmpty}" rendered="#{eventToUserAsocController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{eventToUserAsocController.items.rowCount > 0}">
+                    <h:outputText value="#{eventToUserAsocController.pagination.pageFirstItem + 1}..#{eventToUserAsocController.pagination.pageLastItem + 1}/#{eventToUserAsocController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{eventToUserAsocController.previous}" value="#{bundle.Previous} #{eventToUserAsocController.pagination.pageSize}" rendered="#{eventToUserAsocController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{eventToUserAsocController.next}" value="#{bundle.Next} #{eventToUserAsocController.pagination.pageSize}" rendered="#{eventToUserAsocController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{eventToUserAsocController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEventToUserAsocTitle_attendance}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.attendance}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEventToUserAsocTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEventToUserAsocTitle_userid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userid}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEventToUserAsocTitle_eventid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.eventid}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{eventToUserAsocController.prepareView}" value="#{bundle.ListEventToUserAsocViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{eventToUserAsocController.prepareEdit}" value="#{bundle.ListEventToUserAsocEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{eventToUserAsocController.destroy}" value="#{bundle.ListEventToUserAsocDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{eventToUserAsocController.prepareCreate}" value="#{bundle.ListEventToUserAsocCreateLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ListEventToUserAsocIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

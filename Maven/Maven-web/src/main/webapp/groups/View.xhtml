@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewGroupsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewGroupsLabel_id}"/>
+                    <h:outputText value="#{groupsController.selected.id}" title="#{bundle.ViewGroupsTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewGroupsLabel_name}"/>
+                    <h:outputText value="#{groupsController.selected.name}" title="#{bundle.ViewGroupsTitle_name}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{groupsController.destroyAndView}" value="#{bundle.ViewGroupsDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewGroupsEditLink}"/>
+                <br />
+                <h:commandLink action="#{groupsController.prepareCreate}" value="#{bundle.ViewGroupsCreateLink}" />
+                <br />
+                <h:commandLink action="#{groupsController.prepareList}" value="#{bundle.ViewGroupsShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewGroupsIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
