@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package com.project.entities;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -94,6 +93,8 @@ public class Event implements Serializable {
         return eventToUserAsocCollection;
     }
 
+ 
+    
     public void setEventToUserAsocCollection(Collection<EventToUserAsoc> eventToUserAsocCollection) {
         this.eventToUserAsocCollection = eventToUserAsocCollection;
     }

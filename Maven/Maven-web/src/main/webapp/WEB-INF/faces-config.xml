@@ -19,5 +19,23 @@
             <to-view-id>/event/Create.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>EventList</from-outcome>
+            <to-view-id>/event/List.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>UserList</from-outcome>
+            <to-view-id>/user/List.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>CreateUser</from-outcome>
+            <to-view-id>/user/Create.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

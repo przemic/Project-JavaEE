@@ -8,12 +8,13 @@ body {
 
 h1 {
     font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;   
-    font-size:  25px;
+    font-size:  45px;
     font-weight: bold;
     margin: 0px;
     padding: 0px;
-    color: whitesmoke;
-    text-align: center;
+    color: #E0E4CC;
+    text-align: right;
+    margin-right: 200px;
 }
 
 a:link, a:visited {

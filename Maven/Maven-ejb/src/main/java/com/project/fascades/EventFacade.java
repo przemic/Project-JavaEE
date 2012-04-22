@@ -5,6 +5,8 @@
 package com.project.fascades;
 
 import com.project.entities.Event;
+import com.project.entities.EventToUserAsoc;
+import com.project.entities.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +25,11 @@ public class EventFacade extends AbstractFacade<Event> {
         return em;
     }
 
+   public void assignWithUser(User user){
+        EventToUserAsoc tmp = new EventToUserAsoc();
+        tmp.setUserid(user);
+        tmp.setEventid(null);
+    }
     public EventFacade() {
         super(Event.class);
     }

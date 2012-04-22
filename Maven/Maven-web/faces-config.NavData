@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="place/Edit.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="eventToUserAsoc/List.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="user/View.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="groups/View.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="index.jsp" x="1650" y="150" zoom="true"/>
+        <Node id="user/Create.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="template.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="user/Edit.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="groups/Edit.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="groups/Create.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="event/Create.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="event/Edit.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="user/List.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="eventToUserAsoc/Create.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="comment/Create.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="mainTemplate.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="place/View.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="place/Create.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="comment/List.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="eventToUserAsoc/View.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="place/List.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="old.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="groups/List.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="eventToUserAsoc/Edit.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="index.xhtml" x="1148" y="451" zoom="true"/>
+        <Node id="event/List.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="comment/View.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="comment/Edit.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="event/View.xhtml" x="150" y="150" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>
