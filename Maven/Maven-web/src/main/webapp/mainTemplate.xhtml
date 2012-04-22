@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <script type="text/javascript">
+        function changeColor(id, color) {
+            element = id                        
+            element.style.background = color;
+        }
+        
+    </script>
+    <TITLE></TITLE> 
+    
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <div id="head">
+                    <h1>Impreza z kulturą</h1>      
+                </div>
+                <div id="menu">
+                   <div id="menu_blank_left">
+                   </div>
+                   <div>
+                       <div id="menu_blank_right">
+                       </div>
+                       <div id="menu_buttons">
+                           
+                           <div id="buttons" onMouseOver="changeColor(this, '#937BE3');" onMouseOut="changeColor(this, '#7B97E3');"> 
+                               Moje wydażenia
+                           </div>                          
+                           <div>
+                           <div id="buttons" onMouseOver="changeColor(this, '#937BE3');" onMouseOut="changeColor(this, '#7B97E3');">
+                               Szukaj
+                           </div>
+                           <div id="buttons" onMouseOver="changeColor(this, '#937BE3');" onMouseOut="changeColor(this, '#7B97E3');">
+                               Dodaj wydażenie
+                           </div>
+                           </div>
+                       </div>
+                   
+                   </div>
+                       
+                </div>      
+                
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left"></ui:insert>
+            </div>
+            <div>
+                <div id="right">
+                    <ui:insert name="right"></ui:insert>
+                </div>
+                <div id="content" class="right_content">
+                    <ui:insert name="content">Kontent ktorego nie widac</ui:insert>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">Stopka pliku</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>
