@@ -5,8 +5,8 @@
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="3307"/>
         <property name="databaseName" value="java"/>
-        <property name="User" value="root"/>
-        <property name="Password" value="stek11"/>
+        <property name="User" value="java"/>
+        <property name="Password" value="java"/>
         <property name="URL" value="jdbc:mysql://localhost:3307/java"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>    

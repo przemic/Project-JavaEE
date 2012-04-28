@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+<ui:composition template="/mainTemplate.xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+
+    <ui:define name="content">
+        <form method="post" action="j_security_check">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="j_username" value="Login" />
+                <h:inputText id="j_username" />
+ 
+                <h:outputLabel for="j_password" value="Hasło" />
+                <h:inputSecret id="j_password" />
+ 
+            <h:outputText value="" />
+                <h:panelGrid columns="2">
+                    <input type="submit" name="submit" value="Login" />
+                </h:panelGrid>
+            </h:panelGrid>
+            
+        </form>
+        <h:form>
+            Nie masz jeszcze konta? <h:commandLink action="/user/Create?faces-redirect=true" value="Zarejestruj się!"/>
+        </h:form>
+    </ui:define>
+  
+
+</ui:composition>
+ </h:body>
+ 
+</html>

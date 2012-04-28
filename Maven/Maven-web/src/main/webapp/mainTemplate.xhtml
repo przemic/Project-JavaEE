@@ -40,7 +40,7 @@
                        <div id="menu_buttons">
                            
                            <h:form>
-                           <h:commandLink action="/index" > 
+                           <h:commandLink action="/index?faces-redirect=true" > 
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"   >    
                                   Strona główna
@@ -49,24 +49,24 @@
                            </h:commandLink>
                                
                                
-                          <h:commandLink action="/event/List" >
+                          <h:commandLink action="/event/List?faces-redirect=true" >
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"  >    
                                   Moje wydarzenia
                            </h:panelGroup>
                            </div> 
                            </h:commandLink >    
-                          
+
                            
-                           <h:commandLink action="/user/List" >
+                           <h:commandLink action="/event/Create?faces-redirect=true" >
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"  >    
-                                  Zaloguuj się
+                                  Dodaj wydarzenie
                            </h:panelGroup>
                            </div> 
                            </h:commandLink >
                            
-                           <h:commandLink action="/user/Create" >
+                           <h:commandLink action="/user/Create?faces-redirect=true" >
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"  >    
                                   Rejestracja
@@ -74,10 +74,18 @@
                            </div> 
                            </h:commandLink >
                            
-                           <h:commandLink action="/event/Create" >
+                           <h:commandLink action="/login?faces-redirect=true" rendered="#{empty facesContext.externalContext.userPrincipal.name}">
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"  >    
-                                  Dodaj wydarzenie
+                                  Zaloguj się
+                           </h:panelGroup>
+                           </div> 
+                           </h:commandLink >
+                           
+                           <h:commandLink action="#{authBackingBean.logout}" rendered="#{not empty facesContext.externalContext.userPrincipal.name}">
+                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           <h:panelGroup layout="block"  >    
+                                  Wyloguj się
                            </h:panelGroup>
                            </div> 
                            </h:commandLink >
@@ -107,7 +115,7 @@
             </div>
         </div>
         <div id="bottom">
-            <ui:insert name="bottom">Stopka pliku</ui:insert>
+            <ui:insert name="bottom">Zalogowany jako: #{facesContext.externalContext.userPrincipal.name} </ui:insert>
         </div>
 
     </h:body>
