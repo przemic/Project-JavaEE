@@ -38,7 +38,7 @@ public class AuthBackingBean {
             request.logout();
         } catch (ServletException e) {
             log.log(Level.SEVERE, "Failed to logout user!", e);
-            result = "/logoutError?faces-redirect=true";
+            result = "/auth/logoutError?faces-redirect=true";
         }
      
         return result;

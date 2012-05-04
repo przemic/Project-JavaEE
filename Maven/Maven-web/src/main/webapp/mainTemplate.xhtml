@@ -4,8 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:s="http://jboss.com/products/seam/taglib">
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <script type="text/javascript">
         function changeColor(id, color) {
@@ -74,7 +73,7 @@
                            </div> 
                            </h:commandLink >
                            
-                           <h:commandLink action="/login?faces-redirect=true" rendered="#{empty facesContext.externalContext.userPrincipal.name}">
+                           <h:commandLink action="/auth/login?faces-redirect=true" rendered="#{empty facesContext.externalContext.userPrincipal.name}">
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"  >    
                                   Zaloguj się
