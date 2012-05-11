@@ -187,6 +187,9 @@ public class PlaceController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+    public String getNameById(int id){
+            return ejbFacade.getNameById(id);
+    }
 
     @FacesConverter(forClass = Place.class)
     public static class PlaceControllerConverter implements Converter {
@@ -223,5 +226,7 @@ public class PlaceController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + PlaceController.class.getName());
             }
         }
+        
+        
     }
 }

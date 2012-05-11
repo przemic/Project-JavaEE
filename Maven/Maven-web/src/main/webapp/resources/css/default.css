@@ -1,5 +1,5 @@
 body {
-    background-color: #ffffff;
+    background-color: #216470;
     font-size: 12px;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     color: #000000;  
@@ -13,8 +13,8 @@ h1 {
     margin: 0px;
     padding: 0px;
     color: #E0E4CC;
-    text-align: right;
-    margin-right: 200px;
+    text-align: center  ;
+    
 }
 
 a:link, a:visited {
