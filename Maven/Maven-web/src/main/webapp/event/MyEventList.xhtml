@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/mainTemplate.xhtml">
+        
+        <ui:define name="content">
+             <div id="pageTitle">
+           <h1>Moje wybrane wydarzenia</h1>
+       </div>    
+       <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListEventEmpty}" rendered="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name).size()== 0}"/>
+                <h:panelGroup rendered="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name).size()> 0}">
+                    
+                    <h:dataTable value="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name)}" var="item" class="event_list" style="border-color: white;border-width: 5px" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" >
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Wydarzenie"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Krótki opis"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descriptionText}"/>
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Miejsce"/>
+                            </f:facet>
+                            <h:outputText value="#{item.placeid.name}"/>
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data"/>
+                            </f:facet>
+                            <h:outputText value="#{item.date}"/>
+                        </h:column>
+                                               
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Usuń z ulubionych"/>
+                            </f:facet>
+                            <h:commandLink  action="#{eventToUserAsocController.removeMyEvent(facesContext.externalContext.userPrincipal.name, item)}"  value="Usuń" immediate="true"/>
+                        </h:column>
+                        
+                        
+                        
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{eventController.prepareCreate}" value="#{bundle.ListEventCreateLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ListEventIndexLink}" action="/index" immediate="true" />
+            </h:form>
+            #{facesContext.externalContext.userPrincipal.name}
+        </ui:define>
+    </ui:composition>
+
+</html>
