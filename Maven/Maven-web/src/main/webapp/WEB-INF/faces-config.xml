@@ -27,6 +27,13 @@
         </navigation-case>
         
         <navigation-case>
+            <from-outcome>MyEvent</from-outcome>
+            <to-view-id>/event/MyEventList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+       
+        
+        <navigation-case>
             <from-outcome>CreateUser</from-outcome>
             <to-view-id>/user/Create.xhtml</to-view-id>
             <redirect/>
@@ -39,5 +46,18 @@
         </navigation-case>
         
     </navigation-rule>
+    <navigation-rule>
+         <from-view-id>/login.xhtml</from-view-id>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/event/MyEventList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>interface</from-outcome>
+            <to-view-id>/event/MyEventList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
     
 </faces-config>

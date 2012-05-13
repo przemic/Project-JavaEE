@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.project.entities;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -14,10 +15,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "Event")
+@Table(name = "event")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),
@@ -41,11 +42,11 @@ public class Event implements Serializable {
     @Size(max = 65535)
     @Column(name = "description_text")
     private String descriptionText;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventid")
-    private Collection<EventToUserAsoc> eventToUserAsocCollection;
     @JoinColumn(name = "Place_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Place placeid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventid")
+    private Collection<EventToUserAsoc> eventToUserAsocCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventid")
     private Collection<Comment> commentCollection;
 
@@ -88,23 +89,21 @@ public class Event implements Serializable {
         this.descriptionText = descriptionText;
     }
 
-    @XmlTransient
-    public Collection<EventToUserAsoc> getEventToUserAsocCollection() {
-        return eventToUserAsocCollection;
-    }
-
- 
-    
-    public void setEventToUserAsocCollection(Collection<EventToUserAsoc> eventToUserAsocCollection) {
-        this.eventToUserAsocCollection = eventToUserAsocCollection;
-    }
-
     public Place getPlaceid() {
         return placeid;
     }
 
     public void setPlaceid(Place placeid) {
         this.placeid = placeid;
+    }
+
+    @XmlTransient
+    public Collection<EventToUserAsoc> getEventToUserAsocCollection() {
+        return eventToUserAsocCollection;
+    }
+
+    public void setEventToUserAsocCollection(Collection<EventToUserAsoc> eventToUserAsocCollection) {
+        this.eventToUserAsocCollection = eventToUserAsocCollection;
     }
 
     @XmlTransient

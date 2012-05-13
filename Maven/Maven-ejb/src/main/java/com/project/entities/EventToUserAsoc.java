@@ -11,10 +11,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "Event_To_User_Asoc")
+@Table(name = "event_to_user_asoc")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EventToUserAsoc.findAll", query = "SELECT e FROM EventToUserAsoc e"),
@@ -29,12 +29,12 @@ public class EventToUserAsoc implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "User_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User userid;
     @JoinColumn(name = "Event_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Event eventid;
+    @JoinColumn(name = "User_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User userid;
 
     public EventToUserAsoc() {
     }
@@ -44,7 +44,14 @@ public class EventToUserAsoc implements Serializable {
     }
 
     public Integer getAttendance() {
-        return attendance;
+        if(attendance == null)
+        {
+            return 0;
+        }
+        else
+        {            
+            return attendance;
+        }
     }
 
     public void setAttendance(Integer attendance) {
@@ -59,20 +66,20 @@ public class EventToUserAsoc implements Serializable {
         this.id = id;
     }
 
-    public User getUserid() {
-        return userid;
-    }
-
-    public void setUserid(User userid) {
-        this.userid = userid;
-    }
-
     public Event getEventid() {
         return eventid;
     }
 
     public void setEventid(Event eventid) {
         this.eventid = eventid;
+    }
+
+    public User getUserid() {
+        return userid;
+    }
+
+    public void setUserid(User userid) {
+        this.userid = userid;
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.project.fascades.util.PaginationHelper;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import java.util.Collection;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -17,6 +18,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
 
 @ManagedBean(name = "eventController")
 @SessionScoped
@@ -40,6 +42,7 @@ public class EventController implements Serializable {
         return current;
     }
 
+    
     private EventFacade getFacade() {
         return ejbFacade;
     }
@@ -159,6 +162,7 @@ public class EventController implements Serializable {
         }
         return items;
     }
+    
 
     private void recreateModel() {
         items = null;

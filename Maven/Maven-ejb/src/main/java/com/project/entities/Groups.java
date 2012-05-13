@@ -14,10 +14,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "Groups")
+@Table(name = "groups")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g"),

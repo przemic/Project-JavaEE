@@ -14,10 +14,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "Place")
+@Table(name = "place")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Place.findAll", query = "SELECT p FROM Place p"),

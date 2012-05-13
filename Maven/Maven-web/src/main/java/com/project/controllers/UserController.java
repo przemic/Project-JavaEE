@@ -1,11 +1,14 @@
 package com.project.controllers;
 
+import com.project.entities.Event;
+import com.project.entities.EventToUserAsoc;
 import com.project.entities.User;
 import com.project.fascades.UserFacade;
 import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +20,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
 
 @ManagedBean(name = "userController")
 @SessionScoped
@@ -26,12 +30,52 @@ public class UserController implements Serializable {
     private DataModel items = null;
     @EJB
     private com.project.fascades.UserFacade ejbFacade;
+    @EJB
+    private com.project.fascades.EventToUserAsocFacade asocFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public UserController() {
     }
 
+    public Collection<Event> getUserEvents(String login){
+       
+        return ejbFacade.getEventByName(login);
+    }
+    
+    public String assignUserToEvent(String login,Event event){
+        
+        User user = ejbFacade.getUserByName(login);    
+        if(!(this.findByEventAndUserExistance(user, event))){            
+            asocFacade.assignUserToEvent(user, event);
+            this.setAttendance(user,event);       
+        }
+        return "index?faces-redirect=true";
+    }
+    
+    public boolean isAdmin(String login){
+        
+        User user = ejbFacade.getUserByName(login);
+        if(user.getGroupid().getId() == 2){
+            return true;
+        }
+        else
+        {
+            return false;
+        }           
+       
+    }
+    
+    private boolean findByEventAndUserExistance(User user,Event event){        
+        return asocFacade.findByEventAndUserExistance(user, event);
+    }
+    
+    private void setAttendance(User user,Event event){        
+        EventToUserAsoc ue = asocFacade.findByEventAndUser(user, event);
+        ue.setAttendance(ue.getAttendance()+1);        
+    }
+    
+    
     public User getSelected() {
         if (current == null) {
             current = new User();

@@ -49,15 +49,22 @@
                             </f:facet>
                             <h:outputText value="#{item.date}"/>
                         </h:column>
+                        <h:column rendered="#{facesContext.externalContext.userPrincipal.name != NULL}">
+                            <f:facet name="header">
+                                <h:outputText value="Dodaj"/>
+                            </f:facet>
+                            <h:commandLink  action="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  value="Dodaj do ulubionych" immediate="true"/>
+                        </h:column>
                         
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{eventController.prepareCreate}" value="#{bundle.ListEventCreateLink}"/>
+                <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                    <h:commandLink  action="#{eventController.prepareCreate}"  rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}" value="#{bundle.ListEventCreateLink}"/>
+                </h:panelGroup>
                 <br />
-                <br />
-                <h:commandLink value="#{bundle.ListEventIndexLink}" action="/index" immediate="true" />
-            </h:form>
+                <br />                
+            </h:form>       
 
     </ui:define>
 
