@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"  >
 <h:body>
 <ui:composition template="../mainTemplate.xhtml"
                  xmlns:ui="http://java.sun.com/jsf/facelets">
@@ -15,22 +16,32 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateEventLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{eventController.selected.id}" title="#{bundle.CreateEventTitle_id}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_id}"/>
-                    <h:outputLabel value="#{bundle.CreateEventLabel_name}" for="name" />
-                    <h:inputTextarea rows="4" cols="30" id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
-                    <h:outputLabel value="#{bundle.CreateEventLabel_date}" for="date" />
-                    <h:inputText id="date" value="#{eventController.selected.date}" title="#{bundle.CreateEventTitle_date}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateEventLabel_descriptionText}" for="descriptionText" />
+                <h:panelGrid columns="2">      
+                    <h:outputLabel value="Nazwa wydarzenia:" for="name" />
+                    <br />
+                    <h:inputTextarea rows="2" cols="30" id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
+                    <br />
+                    <h:outputLabel value="Wybór daty wydarzenia:" for="date" />
+                    <br />         
+                    <p:growl id="growl" showDetail="true"/> 
+                    <p:calendar value="#{eventController.selected.date}" pattern="MM/dd/yyyy HH:mm" >  
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                        
+                    </p:calendar>  
+                    <br />
+                    <h:outputLabel value="Opis wydarzenia" for="descriptionText" />
+                    <br />
                     <h:inputTextarea rows="4" cols="30" id="descriptionText" value="#{eventController.selected.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
-                    <h:outputLabel value="#{bundle.CreateEventLabel_placeid}" for="placeid" />
+                    <br />
+                    <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" />
+                    <br />
                     <h:selectOneMenu id="placeid" value="#{eventController.selected.placeid}" title="#{bundle.CreateEventTitle_placeid}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_placeid}">
                         <f:selectItems value="#{placeController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <p:commandButton value="Dodaj nowe miejsce" update="display" oncomplete="placeDialog.show()" />
                 </h:panelGrid>
+                 
+                  
                 <br />
                 <h:commandLink action="#{eventController.create}" value="#{bundle.CreateEventSaveLink}" />
                 <br />
@@ -40,6 +51,33 @@
                 <br />
                 <h:commandLink value="#{bundle.CreateEventIndexLink}" action="/index" immediate="true" />
             </h:form>
+        
+        <h:form>
+             <p:dialog header="Dodaj nowe miejsce" widgetVar="placeDialog" showEffect="fade" hideEffect="fade" resizable="false"
+                           height="600" width="400">  
+
+                    <h:panelGrid id="display" columns="2" cellpadding="5" >  
+
+                       
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_name}" for="pname" />
+                        <h:inputTextarea rows="1" cols="30" id="pname" value="#{placeController.selected.name}" title="#{bundle.CreatePlaceTitle_name}" />
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_longitude}" for="longitude" />
+                        <h:inputTextarea rows="1" cols="30" id="longitude" value="#{placeController.selected.longitude}" title="#{bundle.CreatePlaceTitle_longitude}" />
+                        
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_latitude}" for="latitude" />
+                        <h:inputTextarea rows="1" cols="30" id="latitude" value="#{placeController.selected.latitude}" title="#{bundle.CreatePlaceTitle_latitude}" />
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_streetName}" for="streetName" />
+                        <h:inputTextarea rows="1" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.CreatePlaceTitle_streetName}" />
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_buildingNumber}" for="buildingNumber" />
+                        <h:inputText id="buildingNumber" value="#{placeController.selected.buildingNumber}" title="#{bundle.CreatePlaceTitle_buildingNumber}" />
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_flatNumber}" for="flatNumber" />
+                        <h:inputText id="flatNumber" value="#{placeController.selected.flatNumber}" title="#{bundle.CreatePlaceTitle_flatNumber}" />
+                        <h:outputLabel value="#{bundle.CreatePlaceLabel_city}" for="city" />
+                        <h:inputTextarea rows="1" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.CreatePlaceTitle_city}" />
+                        <h:commandLink action="#{placeController.create}" value="Dodaj miejsce" />
+                    </h:panelGrid>
+                </p:dialog>
+        </h:form>
     </ui:define>
   
 

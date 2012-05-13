@@ -26,9 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Place.findByFlatNumber", query = "SELECT p FROM Place p WHERE p.flatNumber = :flatNumber")})
 public class Place implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
+    @Id     
     @Column(name = "id")
     private Integer id;
     @Lob

@@ -6,10 +6,17 @@ import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import java.util.Collection;
+import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -19,8 +26,10 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
+import org.primefaces.event.DateSelectEvent;
 
 @ManagedBean(name = "eventController")
+@RequestScoped
 @SessionScoped
 public class EventController implements Serializable {
 
@@ -42,6 +51,12 @@ public class EventController implements Serializable {
         return current;
     }
 
+     public void handleDateSelect(DateSelectEvent event) {  
+        FacesContext facesContext = FacesContext.getCurrentInstance();  
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        current.setDate(event.getDate());
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(current.getDate())));  
+    }
     
     private EventFacade getFacade() {
         return ejbFacade;
