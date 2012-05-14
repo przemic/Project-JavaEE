@@ -25,12 +25,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Maven-ejb</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>2.2.1</version>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -43,7 +38,12 @@
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>        
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces</artifactId>  
+            <version>3.2</version>  
+        </dependency> 
     </dependencies>
 
     <build>
@@ -106,12 +106,12 @@
             <id>unknown-jars-temp-repo</id>
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
             <url>file:${project.basedir}/lib</url>
-        </repository>
-        <repository>
-            <url>http://repository.primefaces.org/</url>
-            <id>primefaces</id>
-            <layout>default</layout>
-            <name>Repository for library Library[primefaces]</name>
+        </repository>        
+        <repository>  
+            <id>prime-repo</id>  
+            <name>PrimeFaces Maven Repository</name>  
+            <url>http://repository.primefaces.org</url>  
+            <layout>default</layout>  
         </repository>
     </repositories>
 </project>

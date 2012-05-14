@@ -5,79 +5,145 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.prime.com.tr/ui"  >
+      xmlns:p="http://primefaces.org/ui"  >
 <h:body>
-<ui:composition template="../mainTemplate.xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../mainTemplate.xhtml" >
  
 
     <ui:define name="content">
-        <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+         <div id="pageTitle">
+           <h1>Dodaj wydarzenie</h1>
+        </div>
+        <div>
+            <div id="leftC">                
+            </div>
+            <div>
+                <div id="rightC">                    
+                </div>
+                <div id="contentC" class="right_content">                    
+                
+           
             <h:form>
                 <h:panelGrid columns="2">      
                     <h:outputLabel value="Nazwa wydarzenia:" for="name" />
-                    <br />
+                    
                     <h:inputTextarea rows="2" cols="30" id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
-                    <br />
-                    <h:outputLabel value="Wybór daty wydarzenia:" for="date" />
-                    <br />         
-                    <p:growl id="growl" showDetail="true"/> 
+                    
+                    <h:outputLabel value="Wybór daty wydarzenia:" for="date" />                             
+                    
                     <p:calendar value="#{eventController.selected.date}" pattern="MM/dd/yyyy HH:mm" >  
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
                         
                     </p:calendar>  
-                    <br />
+                    
                     <h:outputLabel value="Opis wydarzenia" for="descriptionText" />
-                    <br />
+                    
                     <h:inputTextarea rows="4" cols="30" id="descriptionText" value="#{eventController.selected.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
-                    <br />
+                    
                     <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" />
-                    <br />
+                    
                     <h:selectOneMenu id="placeid" value="#{eventController.selected.placeid}" title="#{bundle.CreateEventTitle_placeid}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_placeid}">
                         <f:selectItems value="#{placeController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <p:commandButton value="Dodaj nowe miejsce" update="display" oncomplete="placeDialog.show()" />
+                    <p:growl id="growl" showDetail="true"/> 
                 </h:panelGrid>
                  
                   
                 <br />
-                <h:commandLink action="#{eventController.create}" value="#{bundle.CreateEventSaveLink}" />
+                <h:commandButton action="#{eventController.create}" value="Utwórz wydażenie" />
+               
+                <h:commandButton value="Strona główna" action="/index" immediate="true" />
+                 
                 <br />
-                <br />
-                <h:commandLink action="#{eventController.prepareList}" value="#{bundle.CreateEventShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.CreateEventIndexLink}" action="/index" immediate="true" />
+                
             </h:form>
+            <br /><br />
+            <h2><center>Kliknij na mapie aby dodać nowe miejsce  </center></h2>
+
+             <p:gmap id="gmap" center="51.11014019830254,17.032142151061976" zoom="13" type="HYBRID"   
+                        style="width:600px;height:400px"  
+                        model="#{placeController.emptyModel}"   
+                        onPointClick="handlePointClick(event);"   
+                        widgetVar="map" />  
+      
+             <p:dialog header="Dodaj nowe miejsce" widgetVar="dlg" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true">  
+                        <h:form prependId="false">
+                            <p:growl id="messages" showDetail="true" />  
+                            <h:panelGrid columns="2">  
+                                <h:outputLabel value="#{bundle.CreatePlaceLabel_name}" for="pname" />
+                            <h:inputTextarea rows="1" cols="30" id="pname" value="#{placeController.selected.name}" title="#{bundle.CreatePlaceTitle_name}" />                            
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_streetName}" for="streetName" />
+                            <h:inputTextarea rows="1" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.CreatePlaceTitle_streetName}" />
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_buildingNumber}" for="buildingNumber" />
+                            <h:inputText id="buildingNumber" value="#{placeController.selected.buildingNumber}" title="#{bundle.CreatePlaceTitle_buildingNumber}" />
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_flatNumber}" for="flatNumber" />
+                            <h:inputText id="flatNumber" value="#{placeController.selected.flatNumber}" title="#{bundle.CreatePlaceTitle_flatNumber}" />
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_city}" for="city" />
+                            <h:inputTextarea rows="1" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.CreatePlaceTitle_city}" />
+                            
+                                <f:facet name="footer">  
+                                    <p:commandButton value="Dodaj miejsce"   
+                                            actionListener="#{placeController.create}"   
+                                            update="messages"   
+                                            oncomplete="markerAddComplete()"                                            
+                                            />  
+                                    <p:commandButton value="Cancel" onclick="return cancel()"/>  
+                                </f:facet>  
+                            </h:panelGrid>  
+
+                            <h:inputHidden id="lat" value="#{placeController.lat}" />  
+                            <h:inputHidden id="lng" value="#{placeController.lng}" />  
+                        </h:form>  
+                    </p:dialog>  
+  
+                    <script type="text/javascript">  
+                        var currentMarker = null;  
+
+                        function handlePointClick(event) {  
+                            if(currentMarker == null) {  
+                                document.getElementById('lat').value = event.latLng.lat();  
+                                document.getElementById('lng').value = event.latLng.lng();  
+
+                                currentMarker = new google.maps.Marker({  
+                                    position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())  
+                                });  
+
+                                map.addOverlay(currentMarker);  
+
+                                dlg.show();  
+                            }
+                            else
+                            {
+                                   currentMarker.setMap(null);  
+                                   currentMarker = null;
+                                   currentMarker = new google.maps.Marker({  
+                                    position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())  
+                                });  
+                                map.addOverlay(currentMarker);
+                                dlg.show();  
+                            }
+                        }  
+
+                        function markerAddComplete() {  
+                            var title = document.getElementById('title');  
+                            currentMarker.setTitle(title.value);  
+                            title.value = "";                                
+                            dlg.hide();  
+                        }  
+
+                        function cancel() {  
+                            dlg.hide();  
+                            currentMarker.setMap(null);  
+                            currentMarker = null;  
+
+                            return false;  
+                        }  
+                    </script> 
+                </div>
+            </div>
+        </div>
         
-        <h:form>
-             <p:dialog header="Dodaj nowe miejsce" widgetVar="placeDialog" showEffect="fade" hideEffect="fade" resizable="false"
-                           height="600" width="400">  
-
-                    <h:panelGrid id="display" columns="2" cellpadding="5" >  
-
-                       
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_name}" for="pname" />
-                        <h:inputTextarea rows="1" cols="30" id="pname" value="#{placeController.selected.name}" title="#{bundle.CreatePlaceTitle_name}" />
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_longitude}" for="longitude" />
-                        <h:inputTextarea rows="1" cols="30" id="longitude" value="#{placeController.selected.longitude}" title="#{bundle.CreatePlaceTitle_longitude}" />
-                        
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_latitude}" for="latitude" />
-                        <h:inputTextarea rows="1" cols="30" id="latitude" value="#{placeController.selected.latitude}" title="#{bundle.CreatePlaceTitle_latitude}" />
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_streetName}" for="streetName" />
-                        <h:inputTextarea rows="1" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.CreatePlaceTitle_streetName}" />
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_buildingNumber}" for="buildingNumber" />
-                        <h:inputText id="buildingNumber" value="#{placeController.selected.buildingNumber}" title="#{bundle.CreatePlaceTitle_buildingNumber}" />
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_flatNumber}" for="flatNumber" />
-                        <h:inputText id="flatNumber" value="#{placeController.selected.flatNumber}" title="#{bundle.CreatePlaceTitle_flatNumber}" />
-                        <h:outputLabel value="#{bundle.CreatePlaceLabel_city}" for="city" />
-                        <h:inputTextarea rows="1" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.CreatePlaceTitle_city}" />
-                        <h:commandLink action="#{placeController.create}" value="Dodaj miejsce" />
-                    </h:panelGrid>
-                </p:dialog>
-        </h:form>
+           
     </ui:define>
   
 

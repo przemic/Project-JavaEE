@@ -5,23 +5,23 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./mainTemplate.xhtml">
+                template="./mainTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui">
 
     
     <ui:define name="content">
        <div id="pageTitle">
            <h1>Najnowsze wydarzenia</h1>
-       </div>    
+       </div> 
+         
        <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
+                
                 <h:outputText escape="false" value="#{bundle.ListEventEmpty}" rendered="#{eventController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{eventController.items.rowCount > 0}">
+                <h:panelGroup id="mainG" rendered="#{eventController.items.rowCount > 0}">
                     <h:outputText value="#{eventController.pagination.pageFirstItem + 1}..#{eventController.pagination.pageLastItem + 1}/#{eventController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{eventController.previous}" value="#{bundle.Previous} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{eventController.next}" value="#{bundle.Next} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{eventController.items}" var="item" class="event_list" style="border-color: white;border-width: 5px" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" >
+                    <h:dataTable id="dataTab" value="#{eventController.items}" var="item" class="event_list" style="border-color: white;border-width: 5px" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" >
                         
                         <h:column>
                             <f:facet name="header">
@@ -49,14 +49,19 @@
                             </f:facet>
                             <h:outputText value="#{item.date}"/>
                         </h:column>
+                        
                         <h:column rendered="#{facesContext.externalContext.userPrincipal.name != NULL}">
                             <f:facet name="header">
                                 <h:outputText value="Dodaj"/>
                             </f:facet>
-                            <h:commandLink  action="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  value="Dodaj do ulubionych" immediate="true"/>
+                            <p:commandButton  actionListener="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  update="growl" value="Dodaj do ulubionych" immediate="true"/>
+                            <p:growl id="growl" showDetail="true" sticky="true" />
                         </h:column>
                         
+                        
+                         
                     </h:dataTable>
+                    
                 </h:panelGroup>
                 <br />
                 <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">

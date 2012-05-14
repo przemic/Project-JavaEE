@@ -34,6 +34,25 @@
     width: 150px;
 }
 
+#leftC {
+    float: left;    
+    padding: 5px;
+    width: auto;
+}
+
+#rightC {
+    
+    float: right;    
+    padding: 5px;
+    width: 400px;
+}
+
+#contentC{
+    background-color: wheat;
+    width: 400px;
+       
+}
+
 .center_content {
     position: relative;
     background-color: #66A2AD;

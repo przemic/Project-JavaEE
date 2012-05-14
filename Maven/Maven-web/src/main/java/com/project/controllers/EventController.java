@@ -50,7 +50,7 @@ public class EventController implements Serializable {
         }
         return current;
     }
-
+    
      public void handleDateSelect(DateSelectEvent event) {  
         FacesContext facesContext = FacesContext.getCurrentInstance();  
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");

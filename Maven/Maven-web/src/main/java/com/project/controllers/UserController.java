@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -43,6 +44,9 @@ public class UserController implements Serializable {
         return ejbFacade.getEventByName(login);
     }
     
+    public void addMessage(FacesMessage message) {  
+        FacesContext.getCurrentInstance().addMessage(null, message);  
+    }  
     public String assignUserToEvent(String login,Event event){
         
         User user = ejbFacade.getUserByName(login);    
@@ -50,6 +54,8 @@ public class UserController implements Serializable {
             asocFacade.assignUserToEvent(user, event);
             this.setAttendance(user,event);       
         }
+        
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Wydarzenie zostało dodane do listy ulubionych",event.getName() ));
         return "index?faces-redirect=true";
     }
     
