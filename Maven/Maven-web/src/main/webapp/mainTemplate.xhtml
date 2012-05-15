@@ -66,9 +66,16 @@
                                   Dodaj wydarzenie
                            </h:panelGroup>
                            </div> 
+                           <h:commandLink action="/event/Administrative?faces-redirect=true" rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}"  >    
+                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           <h:panelGroup layout="block"  >    
+                                  Panel administracyjny
+                           </h:panelGroup>
+                           </div> 
+                           </h:commandLink>
                            </h:commandLink >
                            </h:panelGroup>
-                           <h:commandLink action="/user/Create?faces-redirect=true" >
+                           <h:commandLink action="/user/Create?faces-redirect=true"  >
                            <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
                            <h:panelGroup layout="block"  >    
                                   Rejestracja

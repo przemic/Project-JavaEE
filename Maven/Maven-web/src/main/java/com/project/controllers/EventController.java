@@ -10,10 +10,8 @@ import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ResourceBundle;
+import java.util.*;
 import javax.ejb.EJB;
-import java.util.Collection;
-import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -27,22 +25,78 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import org.primefaces.event.DateSelectEvent;
+import org.primefaces.model.DualListModel;
 
 @ManagedBean(name = "eventController")
-@RequestScoped
 @SessionScoped
 public class EventController implements Serializable {
 
-    private Event current;
+    private Event current,choosen;
     private DataModel items = null;
     @EJB
     private com.project.fascades.EventFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private DualListModel<Event> newestSet,oldestSet,allSet; 
+    private List<Event> toDelete;
 
     public EventController() {
+        toDelete = new  ArrayList<Event>();
     }
 
+    public Event getChoosen(){
+        return choosen;
+    }
+    
+    public void setChoosen(Event choosen){
+        this.choosen = choosen;
+    }
+    public void deleteSelected(){
+        try {           
+            
+            for(Event ev: newestSet.getTarget()){
+                ejbFacade.remove((Event)ev);
+            }
+            JsfUtil.addSuccessMessage("Usunięto wybrane wydarzenia");  
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, "Nie udało się usunąć wydarzeń");
+        }
+        toDelete = null;
+        newestSet = null;
+    }
+    
+    public String updateSelected(){
+         try {
+            getFacade().edit(choosen);
+            JsfUtil.addSuccessMessage("Pomyślnie zaktualizowano wydarzenie");
+            return "View";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, "Nie udało się zaktualizować wyadarzenia");
+            return null;
+        }
+    }
+    public DualListModel<Event> getNewestSet(){
+        int size = ejbFacade.count();
+        int min = size -100;
+        if(min<0){
+            min=0;
+        }        
+        newestSet= new DualListModel<Event>(ejbFacade.findRange(new int[]{min, size-1}),toDelete);
+        return newestSet;
+    }
+    
+    public void setNewestSet(DualListModel<Event> newestSet){
+        this.newestSet=newestSet;
+    }
+    
+    public List<Event> getOldest(){
+        int size = ejbFacade.count();
+        return (List<Event>)ejbFacade.findRange(new int[]{0, 100});
+    }
+    
+    public List<Event> getAll(){
+        return ejbFacade.findAll();
+    }
     public Event getSelected() {
         if (current == null) {
             current = new Event();
@@ -100,10 +154,10 @@ public class EventController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EventCreated"));
+            JsfUtil.addSuccessMessage("Utworzono nowe wydarzenie.");
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e,"Nie udało się utworzyć wydarzenia.");
             return null;
         }
     }
@@ -117,10 +171,10 @@ public class EventController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EventUpdated"));
+            JsfUtil.addSuccessMessage("Pomyślnie zaktualizowano wydarzenie");
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "Nie udało się zaktualizować wyadarzenia");
             return null;
         }
     }

@@ -5,71 +5,89 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:composition template="/mainTemplate.xhtml">
-        
-        <ui:define name="content">
-            Lista
-            <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./mainTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    
+    <ui:define name="content">
+       <div id="pageTitle">
+           <h1>Najnowsze wydarzenia</h1>
+       </div> 
+         
+       <h:form styleClass="jsfcrud_list_form">
+                
                 <h:outputText escape="false" value="#{bundle.ListEventEmpty}" rendered="#{eventController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{eventController.items.rowCount > 0}">
+                <h:panelGroup id="mainG" rendered="#{eventController.items.rowCount > 0}">
                     <h:outputText value="#{eventController.pagination.pageFirstItem + 1}..#{eventController.pagination.pageLastItem + 1}/#{eventController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{eventController.previous}" value="#{bundle.Previous} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{eventController.next}" value="#{bundle.Next} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{eventController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:dataTable id="dataTab" value="#{eventController.items}" var="item" class="event_list" style="border-color: white;border-width: 5px" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" >
+                        
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventTitle_name}"/>
+                                <h:outputText value="Wydarzenie"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventTitle_date}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.date}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventTitle_descriptionText}"/>
+                                <h:outputText value="Krótki opis"/>
                             </f:facet>
                             <h:outputText value="#{item.descriptionText}"/>
                         </h:column>
+                        
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventTitle_placeid}"/>
+                                <h:outputText value="Miejsce"/>
                             </f:facet>
-                            <h:outputText value="#{item.placeid}"/>
+                            <h:outputText value="#{item.placeid.name}"/>
                         </h:column>
+                        
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
+                                <h:outputText value="Data"/>
                             </f:facet>
-                            <h:commandLink action="#{eventController.prepareView}" value="#{bundle.ListEventViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{eventController.prepareEdit}" value="#{bundle.ListEventEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{eventController.destroy}" value="#{bundle.ListEventDestroyLink}"/>
+                            <h:outputText value="#{item.date}"/>
                         </h:column>
+                        
+                        <h:column rendered="#{facesContext.externalContext.userPrincipal.name != NULL}">
+                            <f:facet name="header">
+                                <h:outputText value="Dodaj"/>
+                            </f:facet>
+                            <p:commandButton   update="editDialog" value="Edytuj" immediate="true" onclick="dlg.show()"/>
+                            
+                            <p:dialog header="Edycja wydarzenia" widgetVar="dlg" resizable="true">  
+                                <h:form id="form">  
+
+                                    <h:panelGrid columns="2" style="margin-bottom:10px">  
+                                        <h:outputLabel for="name" value="Nazwa" />  
+                                        <p:inputText id="name" value="#{item.name}" />  
+                                    </h:panelGrid>  
+
+                                    <p:commandButton id="submitButton" value="Edytuj" update=":dataTab" oncomplete="dlg.hide();"/>  
+
+                                </h:form>  
+                            </p:dialog> 
+                        </h:column>
+                        
+                        
+                         
                     </h:dataTable>
+                    
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{eventController.prepareCreate}" value="#{bundle.ListEventCreateLink}"/>
+                <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                    <h:commandLink  action="#{eventController.prepareCreate}"  rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}" value="#{bundle.ListEventCreateLink}"/>
+                </h:panelGroup>
                 <br />
-                <br />
-                <h:commandLink value="#{bundle.ListEventIndexLink}" action="/index" immediate="true" />
-            </h:form>
-        </ui:define>
-    </ui:composition>
+                <br />                
+            </h:form>       
+
+    </ui:define>
+
+               
+
+</ui:composition>
 
 </html>
