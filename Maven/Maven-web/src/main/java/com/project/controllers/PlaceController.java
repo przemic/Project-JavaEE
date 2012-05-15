@@ -52,6 +52,27 @@ public class PlaceController implements Serializable {
     public MapModel getEmptyModel() {  
         return emptyModel;  
     } 
+    public MapModel getEmptyModel(String lat,String lng) {
+        if(lng == ""){
+            lng = "0";
+        }
+        if(lat ==""){
+            lat = "0";
+        }
+        if(!pointSet){
+            pointMarker = new Marker(new LatLng(Double.parseDouble(lat),Double.parseDouble(lng)), "Miejsce wydarzenia");
+            emptyModel.addOverlay(pointMarker);            
+            pointSet = true;
+            
+        }
+        else
+        {
+            pointMarker.setLatlng(new LatLng(Double.parseDouble(lat),Double.parseDouble(lng)));
+            
+        }
+        return emptyModel;  
+    }
+    
      public void addMessage(FacesMessage message) {  
         FacesContext.getCurrentInstance().addMessage(null, message);  
     }  

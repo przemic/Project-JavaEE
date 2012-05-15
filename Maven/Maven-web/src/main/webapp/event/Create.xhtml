@@ -15,16 +15,16 @@
            <h1>Dodaj wydarzenie</h1>
         </div>
         <div>
-            <div id="leftC">                
-            </div>
-            <div>
-                <div id="rightC">                    
-                </div>
-                <div id="contentC" class="right_content">                    
+                           
                 
-           
+           <h:panelGrid columns="2">
+               
+               <p:column style="padding-left: 80px">   
             <h:form>
-                <h:panelGrid columns="2">      
+                <h:panelGrid columns="2">
+                    <f:facet name="header">  
+                        Dane nowego wydarzenia  
+                    </f:facet> 
                     <h:outputLabel value="Nazwa wydarzenia:" for="name" />
                     
                     <h:inputTextarea rows="2" cols="30" id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
@@ -57,6 +57,8 @@
                 <br />
                 
             </h:form>
+               </p:column>   
+               <p:column>
             <br /><br />
             <h2><center>Kliknij na mapie aby dodać nowe miejsce  </center></h2>
 
@@ -65,7 +67,8 @@
                         model="#{placeController.emptyModel}"   
                         onPointClick="handlePointClick(event);"   
                         widgetVar="map" />  
-      
+      </p:column>
+           </h:panelGrid>
              <p:dialog header="Dodaj nowe miejsce" widgetVar="dlg" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true">  
                         <h:form prependId="false">
                             <p:growl id="messages" showDetail="true" />  
@@ -140,8 +143,8 @@
                         }  
                     </script> 
                 </div>
-            </div>
-        </div>
+            
+      
         
            
     </ui:define>

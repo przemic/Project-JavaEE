@@ -12,17 +12,12 @@
 
     <ui:define name="content">
          <div id="pageTitle">
-           <h1>Dodaj wydarzenie</h1>
+           <h1>Panel administracyjny</h1>
         </div>
         
         <div>
-            <div id="leftC">   
-                
-            </div>
-            <div>
-                <div id="rightC">                    
-                </div>
-                <div id="contentC" class="right_content">
+            
+                    <h:panelGrid columns="2">
                     <h:form>
                     <p:menu>  
                         <p:submenu label="Wydarzenia">  
@@ -35,8 +30,12 @@
                         </p:submenu>                            
                     </p:menu>
                     </h:form>
+                        
+                        <center><h2>Witaj w panelu administracyjnym</h2></center><br />
+                     Prosze wybrać jedną z pozycji z menu po lewej stronie w celu 
+                     wykonania odpowiedniej akcji.
                     
-                    
+                    </h:panelGrid>
                     
                     
                         <p:dialog header="Dodaj nowe wydarzenie" widgetVar="newE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
@@ -98,7 +97,7 @@
                     </h:form>
                     </p:dialog>
                     
-                    <p:dialog header="Selected Values" modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlgEdit">  
+                    <p:dialog header="Edytowane wydarzenie" modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlgEdit">  
                         <h:form id="editDD">
                             <h:panelGrid columns="2" id="displayEdit">  
                                 <h:outputLabel value="Nazwa wydarzenia:" for="name" />                    
@@ -205,8 +204,8 @@
                     </script>
                     </p:dialog>
                     
-                </div>
-            </div>
+               
+        
         </div>
         
            

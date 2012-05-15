@@ -13,63 +13,80 @@
        <div id="pageTitle">
            <h1>Najnowsze wydarzenia</h1>
        </div> 
-         
-       <h:form styleClass="jsfcrud_list_form">
-                
-                <h:outputText escape="false" value="#{bundle.ListEventEmpty}" rendered="#{eventController.items.rowCount == 0}"/>
-                <h:panelGroup id="mainG" rendered="#{eventController.items.rowCount > 0}">
-                    <h:outputText value="#{eventController.pagination.pageFirstItem + 1}..#{eventController.pagination.pageLastItem + 1}/#{eventController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{eventController.previous}" value="#{bundle.Previous} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{eventController.next}" value="#{bundle.Next} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable id="dataTab" value="#{eventController.items}" var="item" class="event_list" style="border-color: white;border-width: 5px" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" >
-                        
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Wydarzenie"/>
-                            </f:facet>
-                            <h:outputText value="#{item.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Krótki opis"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descriptionText}"/>
-                        </h:column>
-                        
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Miejsce"/>
-                            </f:facet>
-                            <h:outputText value="#{item.placeid.name}"/>
-                        </h:column>
-                        
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Data"/>
-                            </f:facet>
-                            <h:outputText value="#{item.date}"/>
-                        </h:column>
-                        
-                        <h:column rendered="#{facesContext.externalContext.userPrincipal.name != NULL}">
-                            <f:facet name="header">
-                                <h:outputText value="Dodaj"/>
-                            </f:facet>
-                            <p:commandButton  actionListener="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  update="growl" value="Dodaj do ulubionych" immediate="true"/>
-                            <p:growl id="growl" showDetail="true" sticky="true" />
-                        </h:column>
-                        
-                        
-                         
-                    </h:dataTable>
+       <p:messages id="messages" showDetail="true" autoUpdate="true"/>    
+       
+        
+        <h:form>  
+  
+    <p:dataGrid var="item" value="#{eventController.getAll()}" columns="3"  
+        rows="12" paginator="true"  
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+        rowsPerPageTemplate="9,12,15"   >  
+          
+        <p:column style="background-color: #A67245;">  
+            <p:panel header="#{item.name}" style="text-align:center; background-color: #FFE1C4;">  
+                <h:panelGrid columns="1" style="width:100%">  
+                                      
+                    <h:outputText value="#{item.descriptionText}" />  
                     
-                </h:panelGroup>
-                <br />
-                <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
-                    <h:commandLink  action="#{eventController.prepareCreate}"  rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}" value="#{bundle.ListEventCreateLink}"/>
-                </h:panelGroup>
-                <br />
-                <br />                
-            </h:form>       
+                    <p:commandLink rendered="#{facesContext.externalContext.userPrincipal.name != NULL}" 
+                                   actionListener="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  
+                                   update=":messages" title="Dodaj do ulubionych">  
+                        <p:graphicImage value="/event.png"/>   
+                          
+                    </p:commandLink>
+                    <p:commandLink actionListener="#{eventController.setChoosen(item)}" 
+                                   oncomplete="detailE.show()"
+                                   update=":editDD:displayEdit"
+                                    title="Pokaz">  
+                        <p:graphicImage value="/place.png"/>  
+                        
+                          
+                    </p:commandLink>
+                  
+                   
+                    
+                   
+                    
+                </h:panelGrid>  
+            </p:panel>  
+        </p:column>  
+        
+  
+    </p:dataGrid>  
+    </h:form>  
+    <p:dialog header="Informacje o wydarzeniu" modal="true" showEffect="fade" hideEffect="fade" widgetVar="detailE">  
+        <h:form id="editDD">
+            <h:panelGrid columns="2" id="displayEdit" style="text-align: left;">  
+                <h:outputLabel value="Nazwa wydarzenia:" for="name" style="font-weight: bold;"/>                    
+                <h:outputText id="name" value="#{eventController.choosen.name}" title="Nazwa wydarzenia" style="font-weight: bold;"/>
+
+                <h:outputLabel value="Data wydarzenia" for="date" style="font-weight: bold;"/> 
+                <p:calendar value="#{eventController.choosen.date}" mode="inline" readonly="true" id="inlineCal"/> 
+
+                <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
+                <h:inputTextarea rows="5" cols="30" readonly="true"   id="descriptionText" value="#{eventController.choosen.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+
+                <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;" />
+                <h:outputText id="pp" value="#{eventController.choosen.placeid.name}" title="Nazwa miejsca" />
+
+
+            </h:panelGrid>                                
+            <p:gmap id="gmap" center="#{eventController.choosen.placeid.latitude},#{eventController.choosen.placeid.longitude}" zoom="13" type="HYBRID"   
+                style="width:600px;height:400px"                                      
+                model="#{placeController.getEmptyModel(eventController.choosen.placeid.latitude ,eventController.choosen.placeid.longitude)}"
+                widgetVar="map" />
+            <br />
+            <center>            
+                <p:commandButton id="cancelEditButton" value="Zamknij"  oncomplete="detailE.hide()" />
+            </center>
+        </h:form>
+    </p:dialog>   
+    
+            
+   
+  
+
 
     </ui:define>
 

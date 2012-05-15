@@ -185,3 +185,17 @@ menu_buttons{
     font-size:  45px;
     font-weight: bold;
 }
+
+.ui-datagrid .ui-paginator {
+    background: #FFE1C4;
+}
+
+.ui-datagrid .buttons {
+    background: #FFE1C4;
+}
+
+
+.ui-datagrid-content-title {
+    background-color: red;
+}
+
