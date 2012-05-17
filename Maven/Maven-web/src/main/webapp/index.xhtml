@@ -18,37 +18,62 @@
         
         <h:form>  
   
-    <p:dataGrid var="item" value="#{eventController.getAll()}" columns="3"  
-        rows="12" paginator="true"  
-        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-        rowsPerPageTemplate="9,12,15"   >  
+    <p:dataGrid var="item" value="#{eventController.getAll()}" columns="5"  
+        rows="20" paginator="true"  
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
+        rowsPerPageTemplate="20" emptyMessage="Brak wydarzeń"  >  
           
-        <p:column style="background-color: #A67245;">  
-            <p:panel header="#{item.name}" style="text-align:center; background-color: #FFE1C4;">  
-                <h:panelGrid columns="1" style="width:100%">  
-                                      
-                    <h:outputText value="#{item.descriptionText}" />  
-                    
-                    <p:commandLink rendered="#{facesContext.externalContext.userPrincipal.name != NULL}" 
-                                   actionListener="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  
-                                   update=":messages" title="Dodaj do ulubionych">  
-                        <p:graphicImage value="/event.png"/>   
-                          
-                    </p:commandLink>
-                    <p:commandLink actionListener="#{eventController.setChoosen(item)}" 
-                                   oncomplete="detailE.show()"
-                                   update=":editDD:displayEdit"
-                                    title="Pokaz">  
-                        <p:graphicImage value="/place.png"/>  
-                        
-                          
-                    </p:commandLink>
-                  
-                   
-                    
-                   
-                    
-                </h:panelGrid>  
+        <p:column>
+            
+            <p:panel header="#{item.name}" style="text-align:center; background-color: #e3e7ed;"> 
+                <p:panelGrid style="width: 100%">
+                    <p:row>                    
+                        <p:column rowspan="3">
+                            <h:outputText value="#{item.placeid.name}" /> 
+                        </p:column>
+                        <p:column style="width: 30px">                           
+                            <div id="attendiesBorder">
+                                <h:outputText value="#{item.attendies}" /> 
+                            </div>
+                        </p:column>                    
+                    </p:row>
+                 </p:panelGrid>
+               <p:panelGrid style="width: 100%; ">
+                    <p:row>
+                        <p:column>
+                            <p:commandLink id="like" rendered="#{facesContext.externalContext.userPrincipal.name != NULL}" 
+                                        actionListener="#{userController.assignUserToEvent(facesContext.externalContext.userPrincipal.name, item)}"  
+                                        update=":messages" title="Dodaj do ulubionych">  
+                                <p:graphicImage value="/like.png"/>   
+
+                            </p:commandLink>
+                            <p:tooltip for="like" value="Dodaj wydarzenie do ulubionych" showEffect="clip" hideEffect="explode" />
+                        </p:column>
+                        <p:column>
+                            <p:commandLink id="ccommentid" rendered="#{facesContext.externalContext.userPrincipal.name != NULL}" 
+                                        actionListener="#{eventController.setChoosen(item)}"
+                                        oncomplete="commDialog.show()"
+                                        update=":commForm"
+                                        title="Zobacz komentarze">  
+                                <p:graphicImage value="/comment.png"/>   
+
+                            </p:commandLink>
+                            <p:tooltip for="ccommentid" value="Zobacz komentarze" showEffect="clip" hideEffect="explode" />
+                        </p:column>
+                        <p:column style="width: 30px">
+                            <p:commandLink id="det" actionListener="#{eventController.setChoosen(item)}" 
+                                        oncomplete="detailE.show()"
+                                        update=":editDD"
+                                            title="Pokaz">  
+                                <p:graphicImage value="/details.png"/>  
+
+
+                            </p:commandLink>
+                            <p:tooltip for="det" value="Zobacz szczegóły wydarzenia" showEffect="clip" hideEffect="explode" />
+                        </p:column>
+                    </p:row>
+               </p:panelGrid>
+                
             </p:panel>  
         </p:column>  
         
@@ -57,21 +82,52 @@
     </h:form>  
     <p:dialog header="Informacje o wydarzeniu" modal="true" showEffect="fade" hideEffect="fade" widgetVar="detailE">  
         <h:form id="editDD">
-            <h:panelGrid columns="2" id="displayEdit" style="text-align: left;">  
-                <h:outputLabel value="Nazwa wydarzenia:" for="name" style="font-weight: bold;"/>                    
-                <h:outputText id="name" value="#{eventController.choosen.name}" title="Nazwa wydarzenia" style="font-weight: bold;"/>
-
-                <h:outputLabel value="Data wydarzenia" for="date" style="font-weight: bold;"/> 
-                <p:calendar value="#{eventController.choosen.date}" mode="inline" readonly="true" id="inlineCal"/> 
-
-                <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
-                <h:inputTextarea rows="5" cols="30" readonly="true"   id="descriptionText" value="#{eventController.choosen.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
-
-                <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;" />
-                <h:outputText id="pp" value="#{eventController.choosen.placeid.name}" title="Nazwa miejsca" />
-
-
-            </h:panelGrid>                                
+            <p:panelGrid id="displayEdit" style="text-align: left; margin-top: 8px; width: 100%">
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0059d6">
+                        <h:outputLabel value="Nazwa wydarzenia:" for="name" style="font-weight: bold;"/>  
+                    </p:column>
+                    <p:column>
+                        <h:outputText id="name" value="#{eventController.choosen.name}" title="Nazwa wydarzenia" style="font-weight: bold;"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0059d6">
+                        <h:outputLabel value="Data wydarzenia" for="date" style="font-weight: bold;"/> 
+                    </p:column>
+                    <p:column>
+                        <p:calendar value="#{eventController.choosen.date}" mode="inline" readonly="true" id="inlineCal"/> 
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0059d6">
+                        <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
+                    </p:column>
+                    <p:column>
+                        <h:inputTextarea rows="5" cols="34"  readonly="true"   id="descriptionText" value="#{eventController.choosen.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>                   
+            <p:panelGrid style="width: 100%">
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0059d6">    
+                        <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;" />  
+                    </p:column>
+                    <p:column style="width: 30%;text-align: center">
+                        <h:outputText id="pp" value="#{eventController.choosen.placeid.name}" title="Nazwa miejsca" />                        
+                    </p:column>
+                    <p:column>
+                        <p:commandLink id="det"  
+                                    oncomplete="detailP.show()"
+                                    update=":placeDet:placeDesc"
+                                        title="Pokaż szczegóły">  
+                            <p:graphicImage value="/more.png"/>  
+                        </p:commandLink>
+                        <p:tooltip for="det" value="Zobacz szczegóły miejsca" showEffect="clip" hideEffect="explode" />
+                    </p:column>
+                
+                </p:row>
+            </p:panelGrid>
             <p:gmap id="gmap" center="#{eventController.choosen.placeid.latitude},#{eventController.choosen.placeid.longitude}" zoom="13" type="HYBRID"   
                 style="width:600px;height:400px"                                      
                 model="#{placeController.getEmptyModel(eventController.choosen.placeid.latitude ,eventController.choosen.placeid.longitude)}"
@@ -81,9 +137,95 @@
                 <p:commandButton id="cancelEditButton" value="Zamknij"  oncomplete="detailE.hide()" />
             </center>
         </h:form>
-    </p:dialog>   
+    </p:dialog>
+       
+       
+    <p:dialog header="Szczegóły miejsca wydarzenia" modal="true" showEffect="fade" hideEffect="fade" widgetVar="detailP">  
+        <h:form id="placeDet">
+            <p:panelGrid id="placeDesc" style="text-align: left; margin-top: 5px; width: 100%">
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Nazwa miejsca :" for="placename" style="font-weight: bold;" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{eventController.choosen.placeid.name}" id="placename" style="font-weight: bold;" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Nazwa ulicy :" for="streetname" style="font-weight: bold;" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{eventController.choosen.placeid.streetName}" id="streetname" style="font-weight: bold;" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Numer budynku :" for="bnumber" style="font-weight: bold;" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{eventController.choosen.placeid.buildingNumber}" id="bnumber" style="font-weight: bold;" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Numer mieszkania :" for="fnumber" style="font-weight: bold;" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{eventController.choosen.placeid.flatNumber}" id="fnumber" style="font-weight: bold;" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Miasto :" for="city" style="font-weight: bold;" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{eventController.choosen.placeid.city}" id="city" style="font-weight: bold;" />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>            
+            <center>            
+                <p:commandButton id="cancelEditButton" value="Zamknij"  oncomplete="detailP.hide()" />
+            </center>
+        </h:form>
+    </p:dialog>
     
+    <p:dialog header="Komentarze do wydarzenia" modal="true" showEffect="fade" hideEffect="fade" widgetVar="commDialog">  
+        <h:form id="commForm">
+            <p:panelGrid id="but" style="width: 100%;text-align: center;">
+                <p:row>  
+                    <p:column colspan="2" >                   
+                        <p:commandButton value="Dodaj komentarz" 
+                                         actionListener="#{commentController.create(eventController.choosen, userController.getUserByName(facesContext.externalContext.userPrincipal.name))}"
+                             
+                                         update="cmtList" 
+                             />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+            <p:panelGrid id="pp" style="width: 100%" > 
+                <p:row>
+                    <p:column>
+                        <h:outputText value="#{facesContext.externalContext.userPrincipal.name}" id="city" style="font-weight: bold;" />
+                    </p:column>
+                    <p:column>
+                        <p:inputTextarea rows="3" cols="35" value="#{commentController.selected.descriptionText}"></p:inputTextarea>                                
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
             
+            <p:dataGrid id="cmtList" var="item" value="#{commentController.getAllByEvent(eventController.choosen)}" columns="1"  
+                rows="5" paginator="true"  
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
+                rowsPerPageTemplate="5" emptyMessage="Brak komentarzy"  >
+                <p:column>
+                    <p:panel header="#{item.userid.login}" style="text-align:center; background-color: #e3e7ed;">
+                        <h:inputTextarea readonly="true" cols="35" rows="3" value="#{item.descriptionText}"/>
+                    </p:panel>
+                </p:column>
+            </p:dataGrid>
+        </h:form>
+    </p:dialog>
    
   
 

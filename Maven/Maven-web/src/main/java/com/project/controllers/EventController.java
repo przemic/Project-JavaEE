@@ -6,6 +6,7 @@ import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
@@ -40,13 +41,24 @@ public class EventController implements Serializable {
     private DualListModel<Event> newestSet,oldestSet,allSet; 
     private List<Event> toDelete;
 
+    private String currentCommentText;
     public EventController() {
         toDelete = new  ArrayList<Event>();
+        currentCommentText = "";
+        choosen = new Event();
     }
 
+    public void approveEvent(Event event){
+        Short app = 1;
+        event.setApproved(app);
+    }
+    
     public Event getChoosen(){
         return choosen;
     }
+    
+   
+    
     
     public void setChoosen(Event choosen){
         this.choosen = choosen;

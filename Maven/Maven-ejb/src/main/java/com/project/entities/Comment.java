@@ -25,6 +25,7 @@ public class Comment implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue
     @Column(name = "id")
     private Integer id;
     @Lob

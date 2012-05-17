@@ -1,11 +1,14 @@
 package com.project.controllers;
 
 import com.project.entities.Comment;
+import com.project.entities.Event;
+import com.project.entities.User;
 import com.project.fascades.CommentFacade;
 import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -30,8 +33,14 @@ public class CommentController implements Serializable {
     private int selectedItemIndex;
 
     public CommentController() {
+        current = new Comment();
     }
 
+    
+    public List<Comment> getAllByEvent(Event event){
+        return ejbFacade.getAllByEvent(event);
+    }
+    
     public Comment getSelected() {
         if (current == null) {
             current = new Comment();
@@ -79,10 +88,19 @@ public class CommentController implements Serializable {
         return "Create";
     }
 
+    public void create(Event event, User user){
+                
+        current.setEventid(event);
+        current.setUserid(user);
+        current.setDescriptionText(getSelected().getDescriptionText());
+        create();
+        current = new Comment();
+       
+    }
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CommentCreated"));
+            JsfUtil.addSuccessMessage("Dodano komentarz dla wydarzenia");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

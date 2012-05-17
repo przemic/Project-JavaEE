@@ -23,8 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EventToUserAsoc implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "attendance")
-    private Integer attendance;
+    private Integer attendance = 1;
     @Id
+    @GeneratedValue
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
@@ -44,14 +45,7 @@ public class EventToUserAsoc implements Serializable {
     }
 
     public Integer getAttendance() {
-        if(attendance == null)
-        {
-            return 0;
-        }
-        else
-        {            
-            return attendance;
-        }
+        return attendance;
     }
 
     public void setAttendance(Integer attendance) {

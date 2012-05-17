@@ -56,4 +56,6 @@ public class EventToUserAsocFacade extends AbstractFacade<EventToUserAsoc> {
     
     
     
+    
+    
 }

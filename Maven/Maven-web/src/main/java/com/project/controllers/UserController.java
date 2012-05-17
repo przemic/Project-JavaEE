@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import com.project.entities.Comment;
 import com.project.entities.Event;
 import com.project.entities.EventToUserAsoc;
 import com.project.entities.User;
@@ -8,10 +9,12 @@ import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ProjectStage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -33,6 +36,10 @@ public class UserController implements Serializable {
     private com.project.fascades.UserFacade ejbFacade;
     @EJB
     private com.project.fascades.EventToUserAsocFacade asocFacade;
+    @EJB
+    private com.project.fascades.EventFacade eventFacade;
+    @EJB
+    private com.project.fascades.CommentFacade commentFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -47,12 +54,72 @@ public class UserController implements Serializable {
     public void addMessage(FacesMessage message) {  
         FacesContext.getCurrentInstance().addMessage(null, message);  
     }  
+    
+    public void approveAttendance(Event event, String login){
+        try{
+            
+            EventToUserAsoc asoc = asocFacade.findByEventAndUser(ejbFacade.getUserByName(login), event);
+            if(asoc.getAttendance()==1){
+                asoc.setAttendance(5);        
+                addAttendandce(event);
+                asocFacade.edit(asoc);
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Potwierdzono chęć przybycia na wydarzenie: ",event.getName() ));
+            }
+            else
+            {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Udział w wydarzeniu został potwierdzony już wcześniej",""));
+            }
+            
+         } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));            
+        }
+        
+    }
+    
+     private void addAttendandce(Event event){
+        BigInteger bb =  event.getAttendies().add(BigInteger.valueOf(1));
+        event.setAttendies(bb); 
+        eventFacade.edit(event);
+    }
+ 
+    private void reduceAttendance(Event event){
+        BigInteger bb =  event.getAttendies().subtract(BigInteger.valueOf(1));
+        event.setAttendies(bb);
+        eventFacade.edit(event);
+    }
+    
+    public User getUserByName(String login){
+        return ejbFacade.getUserByName(login);
+    }
+    
+    public void removeAttendance(Event event, String login){
+        EventToUserAsoc asoc = asocFacade.findByEventAndUser(ejbFacade.getUserByName(login), event);
+        asoc.setAttendance(1);
+        reduceAttendance(event);
+        asocFacade.edit(asoc);
+        
+    }
+    
+    public void addComment(String login,String text,Event event){
+        Comment com = new Comment();
+        com.setDescriptionText(text);
+        com.setEventid(event);
+        User user = ejbFacade.getUserByName(login);
+        com.setUserid(user);
+        try {
+            commentFacade.create(com);
+            JsfUtil.addSuccessMessage("Dodano komentarz dla wydarzenia");
+            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));            
+        }
+    }
+    
     public String assignUserToEvent(String login,Event event){
         
         User user = ejbFacade.getUserByName(login);    
         if(!(this.findByEventAndUserExistance(user, event))){            
-            asocFacade.assignUserToEvent(user, event);
-            this.setAttendance(user,event);       
+            asocFacade.assignUserToEvent(user, event);                 
         }
         
         addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Wydarzenie zostało dodane do listy ulubionych",event.getName() ));
@@ -76,10 +143,7 @@ public class UserController implements Serializable {
         return asocFacade.findByEventAndUserExistance(user, event);
     }
     
-    private void setAttendance(User user,Event event){        
-        EventToUserAsoc ue = asocFacade.findByEventAndUser(user, event);
-        ue.setAttendance(ue.getAttendance()+1);        
-    }
+    
     
     
     public User getSelected() {

@@ -29,7 +29,7 @@ import org.primefaces.model.map.Marker;
 @SessionScoped
 public class PlaceController implements Serializable {
 
-    private MapModel emptyModel;  
+    private MapModel emptyModel,emptyModel2;  
       
     private String title;  
       
@@ -47,30 +47,34 @@ public class PlaceController implements Serializable {
 
     public PlaceController() {
         emptyModel = new DefaultMapModel();
+        emptyModel2 = new DefaultMapModel();
     }
     
     public MapModel getEmptyModel() {  
         return emptyModel;  
     } 
     public MapModel getEmptyModel(String lat,String lng) {
-        if(lng == ""){
-            lng = "0";
+        String llat=lat;
+        String llng=lng;
+        if(llng == ""){
+            llng = "0";
         }
-        if(lat ==""){
-            lat = "0";
+        if(llat ==""){
+            llat = "0";
         }
         if(!pointSet){
-            pointMarker = new Marker(new LatLng(Double.parseDouble(lat),Double.parseDouble(lng)), "Miejsce wydarzenia");
-            emptyModel.addOverlay(pointMarker);            
+            pointMarker = new Marker(new LatLng(Double.parseDouble(llat),Double.parseDouble(llng)), "Miejsce wydarzenia");
+            emptyModel2.addOverlay(pointMarker);            
             pointSet = true;
             
         }
         else
         {
-            pointMarker.setLatlng(new LatLng(Double.parseDouble(lat),Double.parseDouble(lng)));
+            pointMarker.setLatlng(new LatLng(Double.parseDouble(llat),Double.parseDouble(llng)));
             
         }
-        return emptyModel;  
+        
+        return emptyModel2;  
     }
     
      public void addMessage(FacesMessage message) {  
@@ -165,7 +169,7 @@ public class PlaceController implements Serializable {
 
     public String prepareCreate() {
         current = new Place();
-        selectedItemIndex = -1;
+        
         return "Create";
     }
 

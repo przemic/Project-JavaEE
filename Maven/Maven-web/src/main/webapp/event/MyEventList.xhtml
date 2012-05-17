@@ -14,40 +14,64 @@
        </div>    
       
    <p:messages id="messages" showDetail="true" autoUpdate="true"/>    
-    <h:outputText escape="false" value="Prosimy o zalogowanie się." rendered="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name).size()== 0}"/>     
-     <h:form>  
-    <p:dataGrid rendered="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name).size()> 0}" 
-                var="item" value="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name)}" columns="3"  
-        rows="12" paginator="true"  
-        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-        rowsPerPageTemplate="9,12,15">  
+    
+     <h:form id="myF">  
+    <p:dataGrid id="myE" var="item" value="#{userController.getUserEvents(facesContext.externalContext.userPrincipal.name)}" columns="3"  
+         rows="20" paginator="true"  
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
+        rowsPerPageTemplate="20"  emptyMessage="Brak wydarzeń" >
           
         <p:column>  
-            <p:panel header="#{item.name}" style="text-align:center">  
-                <h:panelGrid columns="1" style="width:100%">  
-                                      
-                    <h:outputText value="#{item.descriptionText}" />  
-                    
-                    <p:commandLink rendered="#{facesContext.externalContext.userPrincipal.name != NULL}" 
-                                   actionListener="#{eventToUserAsocController.removeMyEvent(facesContext.externalContext.userPrincipal.name, item)}"  
-                                   update=":messages" title="Usuń z ulubionych">  
-                        <p:graphicImage value="/event.png"/>   
-                          
-                    </p:commandLink>
-                    <p:commandLink actionListener="#{eventController.setChoosen(item)}" 
-                                   oncomplete="detailE.show()"
-                                   update=":editDD:displayEdit"
-                                    title="Pokaz">  
-                        <p:graphicImage value="/place.png"/>  
+            
+               <p:panel header="#{item.name}" style="text-align:center; background-color: #e3e7ed;"> 
+                <p:panelGrid style="width: 100%">    
+                    <p:row>
+                        <p:column rowspan="3">
+                            <h:outputText value="#{item.placeid.name}" /> 
+                        </p:column>
+                        <p:column style="width: 30px">                           
+                            <div id="attendiesBorder">
+                                <h:outputText value="#{item.attendies}" /> 
+                            </div>
+                        </p:column> 
+                    </p:row>
+                 </p:panelGrid> 
+                <p:panelGrid style="width:100%" >
+                    <p:row>
+                        <p:column style="width: 20%" />    
+                        <p:column>
+                            <p:commandLink id="like" rendered="#{facesContext.externalContext.userPrincipal.name != NULL}" 
+                                        actionListener="#{eventToUserAsocController.removeMyEvent(facesContext.externalContext.userPrincipal.name, item)}"  
+                                        update=":messages,myE,:myF" title="Usuń z ulubionych">  
+                                <p:graphicImage value="/del.png"/>   
+
+                            </p:commandLink>
+                            <p:tooltip for="like" value="Usuń wydarzenie z ulubionych" showEffect="clip" hideEffect="explode" />
+                        </p:column>                        
+                        <p:column>
+                            <p:commandLink id="attend" actionListener="#{userController.approveAttendance(item,facesContext.externalContext.userPrincipal.name)}"  
+                                        update=":messages,myE,:myF" title="Potwierdź przybycie">  
+                                <p:graphicImage value="/att.png"/>   
+
+                            </p:commandLink>
+                            <p:tooltip for="attend" value="Potwierdz przyjście" showEffect="clip" hideEffect="explode" />
+                        </p:column>
+                        <p:column style="width: 30px">
+                            <p:commandLink id="det" actionListener="#{eventController.setChoosen(item)}" 
+                                        oncomplete="detailE.show()"
+                                        update=":editDD:displayEdit"
+                                            title="Pokaz">  
+                                <p:graphicImage value="/details.png"/>  
+
+
+                            </p:commandLink>
+                            <p:tooltip for="det" value="Zobacz szczegóły wydarzenia" showEffect="clip" hideEffect="explode" />
+                        </p:column>
                         
-                          
-                    </p:commandLink>
-                  
-                   
-                    
-                   
-                    
-                </h:panelGrid>  
+                    </p:row>
+                </p:panelGrid> 
+                
+                
             </p:panel>  
         </p:column>  
         
@@ -56,21 +80,52 @@
     </h:form>  
     <p:dialog header="Informacje o wydarzeniu" modal="true" showEffect="fade" hideEffect="fade" widgetVar="detailE">  
         <h:form id="editDD">
-            <h:panelGrid columns="2" id="displayEdit" style="text-align: left;">  
-                <h:outputLabel value="Nazwa wydarzenia:" for="name" style="font-weight: bold;"/>                    
-                <h:outputText id="name" value="#{eventController.choosen.name}" title="Nazwa wydarzenia" style="font-weight: bold;"/>
-
-                <h:outputLabel value="Data wydarzenia" for="date" style="font-weight: bold;"/> 
-                <p:calendar value="#{eventController.choosen.date}" mode="inline" readonly="true" id="inlineCal"/> 
-
-                <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
-                <h:inputTextarea rows="5" cols="30" readonly="true"   id="descriptionText" value="#{eventController.choosen.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
-
-                <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;" />
-                <h:outputText id="pp" value="#{eventController.choosen.placeid.name}" title="Nazwa miejsca" />
-
-
-            </h:panelGrid>                                
+            <p:panelGrid id="displayEdit" style="text-align: left; margin-top: 5px; width: 100%">
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Nazwa wydarzenia:" for="name" style="font-weight: bold;"/>  
+                    </p:column>
+                    <p:column>
+                        <h:outputText id="name" value="#{eventController.choosen.name}" title="Nazwa wydarzenia" style="font-weight: bold;"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Data wydarzenia" for="date" style="font-weight: bold;"/> 
+                    </p:column>
+                    <p:column>
+                        <p:calendar value="#{eventController.choosen.date}" mode="inline" readonly="true" id="inlineCal"/> 
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
+                    </p:column>
+                    <p:column>
+                        <h:inputTextarea rows="5" cols="34"  readonly="true"   id="descriptionText" value="#{eventController.choosen.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>                   
+            <p:panelGrid style="width: 100%">
+                <p:row>
+                    <p:column>    
+                        <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;" />  
+                    </p:column>
+                    <p:column style="width: 30%;text-align: center">
+                        <h:outputText id="pp" value="#{eventController.choosen.placeid.name}" title="Nazwa miejsca" />                        
+                    </p:column>
+                    <p:column>
+                        <p:commandLink id="det" actionListener="#{eventController.setChoosen(item)}" 
+                                    oncomplete="detailE.show()"
+                                    update=":editDD:displayEdit"
+                                        title="Pokaz">  
+                            <p:graphicImage value="/more.png"/>  
+                        </p:commandLink>
+                        <p:tooltip for="det" value="Zobacz szczegóły miejsca" showEffect="clip" hideEffect="explode" />
+                    </p:column>
+                
+                </p:row>
+            </p:panelGrid>
             <p:gmap id="gmap" center="#{eventController.choosen.placeid.latitude},#{eventController.choosen.placeid.longitude}" zoom="13" type="HYBRID"   
                 style="width:600px;height:400px"                                      
                 model="#{placeController.getEmptyModel(eventController.choosen.placeid.latitude ,eventController.choosen.placeid.longitude)}"
