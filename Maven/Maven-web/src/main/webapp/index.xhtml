@@ -29,9 +29,20 @@
                 <p:panelGrid style="width: 100%">
                     <p:row>                    
                         <p:column rowspan="3">
-                            <h:outputText value="#{item.placeid.name}" /> 
+                            <h:outputText value="Gdzie : #{item.placeid.name}" /> 
                         </p:column>
-                        <p:column style="width: 30px">                           
+                         
+                        <p:column style="width: 80px">
+                            <p:commandLink id="forEvent">
+                                <h:outputText value="Zobacz kto przyjdzie!" /> 
+                            </p:commandLink>
+                            <p:overlayPanel id="userInEvents" for="forEvent" hideEffect="fade" style="text-align: center;width: 150px;max-height: 300px">  
+                                <p:scrollPanel style="width:150px;max-height: 300px">
+                                <p:dataList value="#{eventController.getAttendiesForEvent(item)}" var="user" itemType="circle" style="border-color: white;text-align: center;margin-right: 10px;">  
+                                    #{user.login}    
+                                </p:dataList>
+                                </p:scrollPanel>
+                            </p:overlayPanel> 
                             <div id="attendiesBorder">
                                 <h:outputText value="#{item.attendies}" /> 
                             </div>

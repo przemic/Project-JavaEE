@@ -38,6 +38,7 @@ public class UserFacade extends AbstractFacade<User> {
         return (Collection<Event>)events;
         
     }
+   
     
     public User getUserByName(String login){
         return (User)em.createQuery("SELECT u FROM User u WHERE u.login = :login").setParameter("login", login).getSingleResult();

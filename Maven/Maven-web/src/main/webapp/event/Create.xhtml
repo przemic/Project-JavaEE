@@ -16,9 +16,9 @@
         </div>
         <div>
              <h:form id="createF">
-            <p:panelGrid id="creation" style="width: 100%;text-align: center">                
+            <p:panelGrid id="creation" style="width: 100%;text-align: left;margin-left: 50px">                
                                  
-                <f:facet name="header" >  
+                <f:facet name="header">  
                         <p:row>
                             <p:column colspan="2" style="font-size: 16px;background-color: #0059d6;">
                                 Dane nowego wydarzenia  
@@ -35,8 +35,8 @@
                         </p:column> 
                     </p:row>
                     <p:row>
-                        <p:column>
-                            <h:inputTextarea rows="2" cols="70"  id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
+                        <p:column style="text-align: center">
+                            <p:inputTextarea rows="2" cols="70"  id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
                         </p:column>
                         <p:column rowspan="11" style="font-weight: bold;text-align: center;width: 600px">
                             <p:gmap id="gmap" center="51.11014019830254,17.032142151061976" zoom="13" type="HYBRID"   
@@ -65,8 +65,8 @@
                     </p:column>
                 </p:row> 
                 <p:row>
-                    <p:column>
-                        <h:inputTextarea rows="4" cols="70" id="descriptionText" value="#{eventController.selected.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+                    <p:column style="text-align: center">
+                        <p:inputTextarea rows="4" cols="70" id="descriptionText" value="#{eventController.selected.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
                     </p:column>
                 </p:row>
                 <p:row>
@@ -75,14 +75,14 @@
                     </p:column>
                 </p:row>
                 <p:row>
-                    <p:column>
+                    <p:column style="text-align: center">
                         <h:selectOneMenu id="placeid" value="#{eventController.selected.placeid}" title="#{bundle.CreateEventTitle_placeid}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_placeid}">
                             <f:selectItems value="#{placeController.itemsAvailableSelectOne}"/>
                         </h:selectOneMenu>                        
                     </p:column>
                 </p:row> 
                 <p:row>
-                    <p:column rowspan="5">
+                    <p:column rowspan="5" style="text-align: center">
                         <h:commandButton action="#{eventController.create}" value="Utwórz wydażenie" style="font-weight: bold;"/>
                     </p:column>
                 </p:row>
@@ -94,15 +94,15 @@
                     <p:growl id="messages" showDetail="true" />  
                     <h:panelGrid columns="2">  
                         <h:outputLabel value="#{bundle.CreatePlaceLabel_name}" for="pname" />
-                    <h:inputTextarea rows="1" cols="30" id="pname" value="#{placeController.selected.name}" title="#{bundle.CreatePlaceTitle_name}" />                            
+                    <p:inputText rows="1" cols="30" id="pname" value="#{placeController.selected.name}" title="#{bundle.CreatePlaceTitle_name}" />                            
                     <h:outputLabel value="#{bundle.CreatePlaceLabel_streetName}" for="streetName" />
-                    <h:inputTextarea rows="1" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.CreatePlaceTitle_streetName}" />
+                    <p:inputText rows="1" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.CreatePlaceTitle_streetName}" />
                     <h:outputLabel value="#{bundle.CreatePlaceLabel_buildingNumber}" for="buildingNumber" />
                     <h:inputText id="buildingNumber" value="#{placeController.selected.buildingNumber}" title="#{bundle.CreatePlaceTitle_buildingNumber}" />
                     <h:outputLabel value="#{bundle.CreatePlaceLabel_flatNumber}" for="flatNumber" />
                     <h:inputText id="flatNumber" value="#{placeController.selected.flatNumber}" title="#{bundle.CreatePlaceTitle_flatNumber}" />
                     <h:outputLabel value="#{bundle.CreatePlaceLabel_city}" for="city" />
-                    <h:inputTextarea rows="1" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.CreatePlaceTitle_city}" />
+                    <p:inputText rows="1" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.CreatePlaceTitle_city}" />
 
                         <f:facet name="footer">  
                             <p:commandButton value="Dodaj miejsce"   

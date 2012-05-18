@@ -13,6 +13,7 @@
 
 #bottom {
     position: relative;
+    color: white;
     background-color: #0050a5;
     padding: 5px;
     margin: 10px 0px 0px 0px;
@@ -202,7 +203,7 @@ menu_buttons{
 
 .ui-widget-header {
     background: #0059d6;   
-    color: #fed000;
+    color: #eff4ff;
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }

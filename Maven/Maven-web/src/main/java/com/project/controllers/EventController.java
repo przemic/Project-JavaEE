@@ -1,6 +1,7 @@
 package com.project.controllers;
 
 import com.project.entities.Event;
+import com.project.entities.User;
 import com.project.fascades.EventFacade;
 import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
@@ -75,6 +76,10 @@ public class EventController implements Serializable {
         }
         toDelete = null;
         newestSet = null;
+    }
+    
+    public Collection<User> getAttendiesForEvent(Event event){
+        return ejbFacade.getAttediesForEvent(event);
     }
     
     public String updateSelected(){

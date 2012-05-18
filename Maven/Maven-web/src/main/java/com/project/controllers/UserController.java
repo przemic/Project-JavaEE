@@ -1,15 +1,14 @@
 package com.project.controllers;
 
-import com.project.entities.Comment;
-import com.project.entities.Event;
-import com.project.entities.EventToUserAsoc;
-import com.project.entities.User;
+import com.project.entities.*;
 import com.project.fascades.UserFacade;
 import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
 import java.util.Collection;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -21,10 +20,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
+import sun.security.provider.MD5;
 
 @ManagedBean(name = "userController")
 @SessionScoped
@@ -192,16 +193,42 @@ public class UserController implements Serializable {
         selectedItemIndex = -1;
         return "Create";
     }
+    
+    public void submit(ActionEvent event) {  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Pola zostały uzupełnione poprawnie", "");  
+          
+        FacesContext.getCurrentInstance().addMessage(null, msg); 
+        create();
+    }
 
     public String create() {
         try {
+            Groups g = new Groups();
+            g.setId(1);
+            g.setName("user");
+            current.setPassword(MD5(current.getPassword()));
+            current.setGroupid(g);
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserCreated"));
+            JsfUtil.addSuccessMessage("Stworzono urzytkownika.");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
+    }
+    
+    public String MD5(String md5) {
+    try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+            sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+        }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
     }
 
     public String prepareEdit() {
