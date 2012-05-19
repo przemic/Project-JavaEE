@@ -8,6 +8,8 @@ import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -38,7 +40,14 @@ public class CommentController implements Serializable {
 
     
     public List<Comment> getAllByEvent(Event event){
-        return ejbFacade.getAllByEvent(event);
+        if(event!=null){
+            return ejbFacade.getAllByEvent(event);
+        }
+        else
+        {
+            List<Comment> cm = Collections.emptyList();
+            return cm;
+        }
     }
     
     public Comment getSelected() {

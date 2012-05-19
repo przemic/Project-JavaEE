@@ -6,7 +6,7 @@
     height: 200px;
     padding: 5px;
     margin: 0px 0px 10px 0px;
-    min-width: 1100px;
+    min-width: 1400px;
     
     
 }
@@ -69,8 +69,8 @@
 .right_content {
     background-color: white;
     padding: 5px;
-    min-width: 700px;
-    min-height: 500px;
+    min-width: 1100px;
+    min-height: 700px;
     margin: 0px 170px 0px 170px;
     border-radius: 4px;
 }
@@ -191,7 +191,7 @@ menu_buttons{
 }
 
 .ui-datagrid .ui-paginator {
-    background: #0059d6;
+    background: #0050a5;
     border-color: white;
 }
 
@@ -202,16 +202,21 @@ menu_buttons{
 }
 
 .ui-widget-header {
-    background: #0059d6;   
+    background: #0050a5;   
     color: #eff4ff;
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-.ui-widget-content {
+.ui-widget-content {   
     background: none repeat scroll 0 0 white;
     border: 1px solid #5B668E;
     color: #4F4F4F;
+}
+
+.ui-panel {
+    width: 200px;
+    padding: 0.2em;
 }
 
 .ui-datagrid-data {

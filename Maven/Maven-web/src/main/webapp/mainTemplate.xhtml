@@ -62,6 +62,24 @@
                            </div> 
                            </h:commandLink >    
 
+                          <h:commandLink action="/event/FeedEvents"  rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
+                           <h:panelGroup layout="block"  >    
+                                  Z Wrocławia!
+                           </h:panelGroup>
+                           </div> 
+                           </h:commandLink > 
+                           
+                           <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                           <h:commandLink action="/event/CreateProposed" rendered="#{!userController.isAdmin(facesContext.externalContext.userPrincipal.name)}"  >
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
+                           <h:panelGroup layout="block"  >    
+                                  Dodaj wydarzenie
+                           </h:panelGroup>
+                           </div>
+                            </h:commandLink >
+                           </h:panelGroup>
+                           
                            <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
                            <h:commandLink action="/event/Create?faces-redirect=true" rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}"  >
                            <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
@@ -118,11 +136,12 @@
                 <ui:insert name="left"></ui:insert>
             </div>
             <div>
-                <div id="right">
-                    <ui:insert name="right"></ui:insert>
-                </div>
+                
                 <div id="content" class="right_content">
                     <ui:insert name="content">Kontent ktorego nie widac</ui:insert>
+                </div>
+                <div id="right">
+                    <ui:insert name="right"></ui:insert>
                 </div>
             </div>
         </div>
