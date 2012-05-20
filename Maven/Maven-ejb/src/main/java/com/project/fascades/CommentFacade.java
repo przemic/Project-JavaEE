@@ -5,6 +5,8 @@
 package com.project.fascades;
 
 import com.project.entities.Comment;
+import com.project.entities.Event;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +25,13 @@ public class CommentFacade extends AbstractFacade<Comment> {
         return em;
     }
 
+    
     public CommentFacade() {
         super(Comment.class);
+    }
+    
+    public List<Comment> getAllByEvent(Event event){
+        return (List<Comment>)em.createQuery("SELECT c FROM Comment c WHERE c.eventid.id=:id ORDER BY c.id DESC").setParameter("id", event.getId()).getResultList();
     }
     
 }

@@ -15,18 +15,20 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name = "User.findUserEvents", query = "SELECT e FROM Event e WHERE e.id IN (SELECT eu.eventid.id FROM EventToUserAsoc eu WHERE eu.userid.id IN  (SELECT u.id FROM User u WHERE u.login=:login))"),
     @NamedQuery(name = "User.findByBirthDate", query = "SELECT u FROM User u WHERE u.birthDate = :birthDate")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
@@ -49,14 +51,17 @@ public class User implements Serializable {
     @Lob
     @Size(max = 65535)
     @Column(name = "login")
-    private String login;
+    private String login;    
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "EventToUserAsoc",joinColumns = {@JoinColumn(name="userId")},
+        inverseJoinColumns = {
+        @JoinColumn(name="eventId")})
+    private Collection<Event> userEvents;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+    private Collection<Comment> commentCollection;
     @JoinColumn(name = "Group_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Groups groupid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private Collection<EventToUserAsoc> eventToUserAsocCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private Collection<Comment> commentCollection;
 
     public User() {
     }
@@ -113,21 +118,13 @@ public class User implements Serializable {
         this.login = login;
     }
 
-    public Groups getGroupid() {
-        return groupid;
-    }
-
-    public void setGroupid(Groups groupid) {
-        this.groupid = groupid;
-    }
-
     @XmlTransient
-    public Collection<EventToUserAsoc> getEventToUserAsocCollection() {
-        return eventToUserAsocCollection;
+    public Collection<Event> getUserEventCollection() {
+        return userEvents;
     }
 
-    public void setEventToUserAsocCollection(Collection<EventToUserAsoc> eventToUserAsocCollection) {
-        this.eventToUserAsocCollection = eventToUserAsocCollection;
+    public void setUserEventCollection(Collection<Event> userEvents) {
+        this.userEvents = userEvents;
     }
 
     @XmlTransient
@@ -137,6 +134,14 @@ public class User implements Serializable {
 
     public void setCommentCollection(Collection<Comment> commentCollection) {
         this.commentCollection = commentCollection;
+    }
+
+    public Groups getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(Groups groupid) {
+        this.groupid = groupid;
     }
 
     @Override

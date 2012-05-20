@@ -12,10 +12,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "Comment")
+@Table(name = "comment")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
@@ -25,6 +25,7 @@ public class Comment implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue
     @Column(name = "id")
     private Integer id;
     @Lob

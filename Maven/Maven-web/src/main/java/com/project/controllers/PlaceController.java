@@ -6,22 +6,38 @@ import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 @ManagedBean(name = "placeController")
 @SessionScoped
 public class PlaceController implements Serializable {
 
+    private MapModel emptyModel,emptyModel2;  
+      
+    private String title;  
+      
+    private double lat;  
+    private Marker pointMarker;
+    private boolean pointSet;
+      
+    private double lng;
     private Place current;
     private DataModel items = null;
     @EJB
@@ -30,7 +46,83 @@ public class PlaceController implements Serializable {
     private int selectedItemIndex;
 
     public PlaceController() {
+        emptyModel = new DefaultMapModel();
+        emptyModel2 = new DefaultMapModel();
     }
+    
+    public MapModel getEmptyModel() {  
+        return emptyModel;  
+    } 
+    public MapModel getEmptyModel(String lat,String lng) {
+        String llat=lat;
+        String llng=lng;
+        if(llng == ""){
+            llng = "0";
+        }
+        if(llat ==""){
+            llat = "0";
+        }
+        if(!pointSet){
+            pointMarker = new Marker(new LatLng(Double.parseDouble(llat),Double.parseDouble(llng)), "Miejsce wydarzenia");
+            emptyModel2.addOverlay(pointMarker);            
+            pointSet = true;
+            
+        }
+        else
+        {
+            pointMarker.setLatlng(new LatLng(Double.parseDouble(llat),Double.parseDouble(llng)));
+            
+        }
+        
+        return emptyModel2;  
+    }
+    
+     public void addMessage(FacesMessage message) {  
+        FacesContext.getCurrentInstance().addMessage(null, message);  
+    }  
+      
+    public String getTitle() {  
+        return title;  
+    }  
+  
+    public void setTitle(String title) {  
+        this.title = title;  
+    }  
+  
+    public double getLat() {  
+        return lat;  
+    }  
+  
+    public void setLat(double lat) {  
+        this.lat = lat;  
+    }  
+  
+    public double getLng() {  
+        return lng;  
+    }  
+  
+    public void setLng(double lng) {  
+        this.lng = lng;  
+    }  
+      
+    public void addMarker(ActionEvent actionEvent) {  
+         
+        if(!pointSet){
+            pointMarker = new Marker(new LatLng(lat, lng), title);
+            emptyModel.addOverlay(pointMarker);            
+            pointSet = true;
+            getSelected().setLatitude(Double.toString(lat));
+            getSelected().setLongitude(Double.toString(lng));
+        }
+        else
+        {
+            pointMarker.setLatlng(new LatLng(lat, lng));
+            
+        }
+        
+        updateCords();   
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodano punkt o współrzędnych", "Lat:" + lat + ", Lng:" + lng));  
+    }  
 
     public Place getSelected() {
         if (current == null) {
@@ -39,6 +131,8 @@ public class PlaceController implements Serializable {
         }
         return current;
     }
+    
+    
 
     private PlaceFacade getFacade() {
         return ejbFacade;
@@ -75,14 +169,20 @@ public class PlaceController implements Serializable {
 
     public String prepareCreate() {
         current = new Place();
-        selectedItemIndex = -1;
+        
         return "Create";
     }
 
+    public void updateCords(){
+        current.setLatitude(Double.toString(lat));
+        current.setLongitude(Double.toString(lng));
+    }
     public String create() {
-        try {
+        current.setLatitude(Double.toString(lat));
+        current.setLongitude(Double.toString(lng));
+        try {            
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlaceCreated"));
+            JsfUtil.addSuccessMessage("Utworzono nowe miejsce");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -185,7 +285,24 @@ public class PlaceController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return this.getSelectItems(ejbFacade.findAll(), true);
+    }
+    
+    public SelectItem[] getSelectItems(List<Place> entities, boolean selectOne) {
+        int size = selectOne ? entities.size() + 1 : entities.size();
+        SelectItem[] elements = new SelectItem[size];
+        int i = 0;
+        if (selectOne) {
+            elements[0] = new SelectItem("", "---");
+            i++;
+        }
+        for (Place x : entities) {
+            elements[i++] = new SelectItem(x, x.getName());
+        }
+        return elements;
+    }
+    public String getNameById(int id){
+            return ejbFacade.getNameById(id);
     }
 
     @FacesConverter(forClass = Place.class)
@@ -223,5 +340,7 @@ public class PlaceController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + PlaceController.class.getName());
             }
         }
+        
+        
     }
 }

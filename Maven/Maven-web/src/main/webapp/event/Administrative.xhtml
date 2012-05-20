@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"  >
+<h:body>
+<ui:composition template="../mainTemplate.xhtml" >
+ 
+
+    <ui:define name="content">
+         <div id="pageTitle">
+           <h1>Panel administracyjny</h1>
+        </div>
+        
+        <div>
+            
+                    <h:panelGrid columns="2">
+                    <h:form>
+                    <p:menu>  
+                        <p:submenu label="Wydarzenia">  
+                            <p:menuitem value="Usuń" onclick="dltE.show()"   icon="ui-icon-disk"/>  
+                            <p:menuitem value="Dodaj" onclick="newE.show()"  icon="ui-icon-arrowrefresh-1-w"/>  
+                            <p:menuitem value="Edytuj" onclick="editE.show()"   icon="ui-icon-disk"/>  
+                        </p:submenu>  
+                        <p:submenu label="Miejsca">  
+                            <p:menuitem value="Dodaj miejsce" onclick="dlg.show()" icon="ui-icon-close"/>  
+                        </p:submenu>                            
+                    </p:menu>
+                    </h:form>
+                        
+                        <center><h2>Witaj w panelu administracyjnym</h2></center><br />
+                     Prosze wybrać jedną z pozycji z menu po lewej stronie w celu 
+                     wykonania odpowiedniej akcji.
+                    
+                    </h:panelGrid>
+                    
+                    
+                        <p:dialog header="Dodaj nowe wydarzenie" widgetVar="newE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
+                            <h:form>
+                        <h:panelGrid columns="2">      
+                            <h:outputLabel value="Nazwa wydarzenia:" for="name" />
+
+                            <h:inputTextarea rows="2" cols="30" id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
+
+                            <h:outputLabel value="Wybór daty wydarzenia:" for="date" />                             
+
+                            <p:calendar value="#{eventController.selected.date}" pattern="MM/dd/yyyy HH:mm" >  
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+
+                            </p:calendar>  
+
+                            <h:outputLabel value="Opis wydarzenia" for="descriptionText" />
+
+                            <h:inputTextarea rows="4" cols="30" id="descriptionText" value="#{eventController.selected.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+
+                            <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" />
+
+                            <h:selectOneMenu id="placeid" value="#{eventController.selected.placeid}" title="#{bundle.CreateEventTitle_placeid}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_placeid}">
+                                <f:selectItems value="#{placeController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                        </h:panelGrid>
+                        
+
+                                
+                        <center>
+                            <p:growl id="growl" showDetail="true"/> 
+                            <p:commandButton actionListener="#{eventController.create}" update="growl" value="Utwórz wydażenie" oncomplete="newE.hide()"/>                    
+                        </center>
+                        </h:form>
+                        </p:dialog>     
+                    
+                    
+                    <p:dialog header="Usuń wybrane wydzarzenia" widgetVar="dltE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
+                        <h:form prependId="false">
+                        <p:pickList id="pickList" value="#{eventController.newestSet}"  
+                                var="event"  
+                                itemLabel="#{event.name}"  
+                                itemValue="#{event}" />
+                        <p:growl id="growl" showDetail="true"/>  
+                        <p:commandButton id="eSubmit" value="Zatwierdz" actionListener="#{eventController.deleteSelected}" oncomplete="dltE.hide()" update="growl"/>
+                        </h:form>
+                    </p:dialog>
+                    
+                    <p:dialog header="Edytuj wybrane wydarzenie" widgetVar="editE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
+                    <h:form prependId="false" id="choosedEditList">
+                        <p:selectOneListbox id="scroll" value="#{eventController.choosen}" style="height:400px ;width:300px">  
+                            <f:selectItems value="#{eventController.newestSet.source}"  
+                                var="event" itemLabel="#{event.name}" itemValue="#{event}" />  
+                        </p:selectOneListbox>
+                        <p:commandButton id="editButton" value="Edytuj" update=":editDD:displayEdit" oncomplete="dlgEdit.show(),editE.hide()" />  
+                         
+                        
+                    </h:form>
+                    </p:dialog>
+                    
+                    <p:dialog header="Edytowane wydarzenie" modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlgEdit">  
+                        <h:form id="editDD">
+                            <h:panelGrid columns="2" id="displayEdit">  
+                                <h:outputLabel value="Nazwa wydarzenia:" for="name" />                    
+                                <h:inputTextarea rows="2" cols="30" id="name" value="#{eventController.choosen.name}" title="#{bundle.CreateEventTitle_name}" />
+
+                                <h:outputLabel value="Wybór daty wydarzenia:" for="date" />                             
+
+                                <p:calendar value="#{eventController.choosen.date}" pattern="MM/dd/yyyy HH:mm" >  
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+
+                                </p:calendar>  
+
+                                <h:outputLabel value="Opis wydarzenia" for="descriptionText" />
+
+                                <h:inputTextarea rows="4" cols="30" id="descriptionText" value="#{eventController.choosen.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+
+                                <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" />
+
+                                <h:selectOneMenu id="placeid" value="#{eventController.choosen.placeid}" title="#{bundle.CreateEventTitle_placeid}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_placeid}">
+                                    <f:selectItems value="#{placeController.itemsAvailableSelectOne}"/>
+                                </h:selectOneMenu>
+                                <p:growl id="growl" showDetail="true"/>   
+                            </h:panelGrid>
+                            <center>
+                                <p:commandButton id="approveEditButton" value="Zatwierdź" actionListener="#{eventController.updateSelected}" update=":editDD:displayEdit, growl, :choosedEditList:scroll" oncomplete="dlgEdit.hide()" />
+                                <p:commandButton id="cancelEditButton" value="Anuluj" update=":editDD:displayEdit" oncomplete="dlgEdit.hide()" />
+                            </center>
+                        </h:form>
+                    </p:dialog>
+                    
+                    <p:dialog header="Dodaj nowe miejsce" widgetVar="dlg" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="false">
+                        <p:gmap id="gmap" center="51.11014019830254,17.032142151061976" zoom="13" type="HYBRID"   
+                        style="width:600px;height:400px"  
+                        model="#{placeController.emptyModel}"   
+                        onPointClick="handlePointClick(event);"   
+                        widgetVar="map" />
+                        <h:form prependId="false">
+                            <p:growl id="messages" showDetail="true" />  
+                            <h:panelGrid columns="2">  
+                                <h:outputLabel value="#{bundle.CreatePlaceLabel_name}" for="pname" />
+                            <h:inputTextarea rows="1" cols="30" id="pname" value="#{placeController.selected.name}" title="#{bundle.CreatePlaceTitle_name}" />                            
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_streetName}" for="streetName" />
+                            <h:inputTextarea rows="1" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.CreatePlaceTitle_streetName}" />
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_buildingNumber}" for="buildingNumber" />
+                            <h:inputText id="buildingNumber" value="#{placeController.selected.buildingNumber}" title="#{bundle.CreatePlaceTitle_buildingNumber}" />
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_flatNumber}" for="flatNumber" />
+                            <h:inputText id="flatNumber" value="#{placeController.selected.flatNumber}" title="#{bundle.CreatePlaceTitle_flatNumber}" />
+                            <h:outputLabel value="#{bundle.CreatePlaceLabel_city}" for="city" />
+                            <h:inputTextarea rows="1" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.CreatePlaceTitle_city}" />
+                            
+                                <f:facet name="footer">  
+                                    <p:commandButton value="Dodaj miejsce"   
+                                            actionListener="#{placeController.create}"   
+                                            update="messages"   
+                                            oncomplete="dlg.hide();"                                            
+                                            />  
+                                    <p:commandButton value="Anuluj" onclick="return cancel()"/>  
+                                </f:facet>  
+                            </h:panelGrid>  
+
+                            <h:inputHidden id="lat" value="#{placeController.lat}" />  
+                            <h:inputHidden id="lng" value="#{placeController.lng}" />  
+                        </h:form> 
+                        <script type="text/javascript">  
+                        var currentMarker = null;  
+
+                        function handlePointClick(event) {  
+                            if(currentMarker == null) {  
+                                document.getElementById('lat').value = event.latLng.lat();  
+                                document.getElementById('lng').value = event.latLng.lng();  
+
+                                currentMarker = new google.maps.Marker({  
+                                    position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())  
+                                });  
+
+                                map.addOverlay(currentMarker);  
+
+                                dlg.show();  
+                            }
+                            else
+                            {
+                                   currentMarker.setMap(null);  
+                                   currentMarker = null;
+                                   currentMarker = new google.maps.Marker({  
+                                    position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())  
+                                });  
+                                map.addOverlay(currentMarker);
+                                dlg.show();  
+                            }
+                        }  
+
+                        function markerAddComplete() {  
+                                                            
+                            dlg.hide();  
+                        }  
+
+                        function cancel() {  
+                            dlg.hide();  
+                            currentMarker.setMap(null);  
+                            currentMarker = null;  
+
+                            return false;  
+                        }  
+                    </script>
+                    </p:dialog>
+                    
+               
+        
+        </div>
+        
+           
+    </ui:define>
+  
+
+    
+
+</ui:composition>
+ </h:body>
+ 
+</html>

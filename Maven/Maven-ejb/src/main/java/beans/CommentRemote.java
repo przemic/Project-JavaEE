@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.project.beans;
+package beans;
 
 import com.project.entities.Comment;
 import com.project.entities.Event;
 import com.project.entities.User;
+import java.util.Collection;
 import javax.ejb.Remote;
 
 /**
@@ -17,6 +18,7 @@ public interface CommentRemote {
     
     public void addComment(String description_text, Event Event_id, User User_id);
     public Comment getComment(Integer id);
+    public Collection<Comment> getAllByEvent(Integer eventId);
 //    public Club getClub(int id) throws NotExistingData;
 //    
 //    public ClubStats getStats(int id) throws NotExistingData;

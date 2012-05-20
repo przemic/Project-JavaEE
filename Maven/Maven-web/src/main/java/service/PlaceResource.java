@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.project.service;
+package service;
 
-import com.project.entities.User;
+import com.project.entities.Place;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +18,7 @@ import javax.ws.rs.*;
  *
  * @author przemic
  */
-@Path("user")
-public class UserResource {
-
+@Path("place")
+public class PlaceResource {
+ 
 }

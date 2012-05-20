@@ -2,12 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.project.beans;
+package beans;
 
 import com.project.entities.Comment;
 import com.project.entities.Event;
 import com.project.entities.User;
 import com.project.fascades.CommentFacade;
+import com.project.fascades.EventFacade;
+import com.project.fascades.UserFacade;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -16,12 +18,16 @@ import javax.ejb.Stateless;
  *
  * @author przemic
  */
-@Remote
 @Stateless
+@Remote(CommentRemote.class)
 public class CommentBean implements CommentRemote {
     
     @EJB
     private CommentFacade commentFacade;
+    @EJB
+    private UserFacade userFacade;
+    @EJB
+    private EventFacade eventFacade;
 //    @EJB
 //    private StatsBean statsBean;
 //    @EJB
@@ -92,6 +98,13 @@ public class CommentBean implements CommentRemote {
         Comment comment = commentFacade.find(id);
         
         return comment;
+    }
+    
+    @Override
+    public Collection<Comment> getAllByEvent(Integer eventId) {
+        Event event = eventFacade.find(eventId);
+        
+        return commentFacade.getAllByEvent(event);
     }
 //
 //    @Override

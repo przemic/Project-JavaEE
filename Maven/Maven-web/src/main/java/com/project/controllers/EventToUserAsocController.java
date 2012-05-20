@@ -1,6 +1,8 @@
 package com.project.controllers;
 
+import com.project.entities.Event;
 import com.project.entities.EventToUserAsoc;
+import com.project.entities.User;
 import com.project.fascades.EventToUserAsocFacade;
 import com.project.fascades.util.JsfUtil;
 import com.project.fascades.util.PaginationHelper;
@@ -26,12 +28,21 @@ public class EventToUserAsocController implements Serializable {
     private DataModel items = null;
     @EJB
     private com.project.fascades.EventToUserAsocFacade ejbFacade;
+    @EJB
+    private com.project.fascades.UserFacade userFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public EventToUserAsocController() {
     }
 
+    public void removeMyEvent(String login,Event event){
+        User user = userFacade.getUserByName(login);
+        EventToUserAsoc ue = ejbFacade.findByEventAndUser(user, event);
+        ejbFacade.remove(ue);
+        
+    }
+    
     public EventToUserAsoc getSelected() {
         if (current == null) {
             current = new EventToUserAsoc();

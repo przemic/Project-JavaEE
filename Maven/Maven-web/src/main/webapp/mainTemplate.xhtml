@@ -13,6 +13,7 @@
         }
         
     </script>
+    
     <TITLE></TITLE> 
     
     <h:head>
@@ -20,15 +21,20 @@
         <link href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="styleSheet" type="text/css"/>  
         <link href="#{facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="styleSheet" type="text/css"/>  
         <title>Facelets Template</title>
+        <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
+        
     </h:head>
 
     <h:body>
 
         <div id="top">
             <ui:insert name="top">
-                <div id="head">
-                    <br></br>
-                    <h1>Impreza z kulturą</h1>      
+                <div id="head">                    
+                    <div id="head-right">
+                        <br></br>
+                        <h1>Impreza z kulturą</h1>   
+                    </div>
+                   
                 </div>
                 <div id="menu">
                    <div id="menu_blank_left">
@@ -40,7 +46,7 @@
                            
                            <h:form>
                            <h:commandLink action="/index?faces-redirect=true" > 
-                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
                            <h:panelGroup layout="block"   >    
                                   Strona główna
                            </h:panelGroup>
@@ -48,25 +54,32 @@
                            </h:commandLink>
                                
                                
-                          <h:commandLink action="/event/List?faces-redirect=true" >
-                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                          <h:commandLink action="/event/MyEventList"  rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
                            <h:panelGroup layout="block"  >    
                                   Moje wydarzenia
                            </h:panelGroup>
                            </div> 
                            </h:commandLink >    
 
-                           
-                           <h:commandLink action="/event/Create?faces-redirect=true" >
-                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                           <h:commandLink action="/event/Create?faces-redirect=true" rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}"  >
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
                            <h:panelGroup layout="block"  >    
                                   Dodaj wydarzenie
                            </h:panelGroup>
                            </div> 
+                           <h:commandLink action="/event/Administrative?faces-redirect=true" rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}"  >    
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
+                           <h:panelGroup layout="block"  >    
+                                  Panel administracyjny
+                           </h:panelGroup>
+                           </div> 
+                           </h:commandLink>
                            </h:commandLink >
-                           
-                           <h:commandLink action="/user/Create?faces-redirect=true" >
-                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           </h:panelGroup>
+                           <h:commandLink action="/user/Create?faces-redirect=true"  >
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
                            <h:panelGroup layout="block"  >    
                                   Rejestracja
                            </h:panelGroup>
@@ -74,7 +87,7 @@
                            </h:commandLink >
                            
                            <h:commandLink action="/auth/login?faces-redirect=true" rendered="#{empty facesContext.externalContext.userPrincipal.name}">
-                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
                            <h:panelGroup layout="block"  >    
                                   Zaloguj się
                            </h:panelGroup>
@@ -82,7 +95,7 @@
                            </h:commandLink >
                            
                            <h:commandLink action="#{authBackingBean.logout}" rendered="#{not empty facesContext.externalContext.userPrincipal.name}">
-                           <div id="buttons" onMouseOver="changeColor(this, '#F38630');" onMouseOut="changeColor(this, '#FA6900');">
+                           <div id="buttons" onMouseOver="changeColor(this, '#0059d6');" onMouseOut="changeColor(this, '#0050a5');">
                            <h:panelGroup layout="block"  >    
                                   Wyloguj się
                            </h:panelGroup>

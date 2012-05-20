@@ -27,4 +27,9 @@ public class PlaceFacade extends AbstractFacade<Place> {
         super(Place.class);
     }
     
+    public String  getNameById(int id){
+        return (String)em.createQuery("from Place p where p.id=:id").setParameter("id",id).getSingleResult();
+        
+    }
+    
 }

@@ -14,10 +14,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author przemic
+ * @author steq
  */
 @Entity
-@Table(name = "Place")
+@Table(name = "place")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Place.findAll", query = "SELECT p FROM Place p"),
@@ -26,9 +26,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Place.findByFlatNumber", query = "SELECT p FROM Place p WHERE p.flatNumber = :flatNumber")})
 public class Place implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
+    @Id  
+    @GeneratedValue
     @Column(name = "id")
     private Integer id;
     @Lob

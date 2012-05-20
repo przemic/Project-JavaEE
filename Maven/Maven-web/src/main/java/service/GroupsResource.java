@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.project.service;
+package service;
 
 import com.project.entities.Groups;
 import java.util.List;

@@ -12,9 +12,9 @@ h1 {
     font-weight: bold;
     margin: 0px;
     padding: 0px;
-    color: #E0E4CC;
-    text-align: right;
-    margin-right: 200px;
+    color: white;
+    text-align: center  ;
+    
 }
 
 a:link, a:visited {
