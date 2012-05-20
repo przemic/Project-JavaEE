@@ -17,29 +17,36 @@
         
         <div>
             
-                    <h:panelGrid columns="2">
-                    <h:form>
-                    <p:menu>  
-                        <p:submenu label="Wydarzenia">  
-                            <p:menuitem value="Usuń" onclick="dltE.show()"   icon="ui-icon-disk"/>  
-                            <p:menuitem value="Dodaj" onclick="newE.show()"  icon="ui-icon-arrowrefresh-1-w"/>  
-                            <p:menuitem value="Edytuj" onclick="editE.show()"   icon="ui-icon-disk"/>  
-                        </p:submenu>  
-                        <p:submenu label="Miejsca">  
-                            <p:menuitem value="Dodaj miejsce" onclick="dlg.show()" icon="ui-icon-close"/>  
-                        </p:submenu>                            
-                    </p:menu>
-                    </h:form>
+                    <p:panelGrid style="width: 100%;text-align: center">
+                        <p:row>
+                            <p:column rowspan="10" style="width: 10%;text-align: center">
+                            <h:form>                       
+                            <p:menu>  
+                                <p:submenu label="Wydarzenia">  
+                                    <p:menuitem value="Usuń" onclick="dltE.show()"   icon="ui-icon-minusthick"/>  
+                                    <p:menuitem value="Dodaj" onclick="newE.show()"  icon="ui-icon-plusthick"/>  
+                                    <p:menuitem value="Edytuj" onclick="editE.show()"   icon="ui-icon-pencil"/>
+                                    <p:menuitem value="Do akceptacji" onclick="accE.show()" icon="ui-icon-check"/>
+                                </p:submenu>  
+                                <p:submenu label="Miejsca">  
+                                    <p:menuitem value="Dodaj miejsce" onclick="dlg.show()" icon="ui-icon-plusthick"/>  
+                                </p:submenu>                            
+                            </p:menu>
+                            </h:form>
+                        </p:column>
+                            <p:column rowspan="10" style="width: 90%;text-align: center">
                         
-                        <center><h2>Witaj w panelu administracyjnym</h2></center><br />
-                     Prosze wybrać jedną z pozycji z menu po lewej stronie w celu 
-                     wykonania odpowiedniej akcji.
+                                <center><h2>Witaj w panelu administracyjnym</h2></center><br />
+                            Prosze wybrać jedną z pozycji z menu po lewej stronie w celu 
+                            wykonania odpowiedniej akcji.
+                        </p:column>
+                        </p:row>
                     
-                    </h:panelGrid>
+                    </p:panelGrid>
                     
                     
                         <p:dialog header="Dodaj nowe wydarzenie" widgetVar="newE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
-                            <h:form>
+                            <h:form id="all">
                         <h:panelGrid columns="2">      
                             <h:outputLabel value="Nazwa wydarzenia:" for="name" />
 
@@ -68,7 +75,7 @@
                                 
                         <center>
                             <p:growl id="growl" showDetail="true"/> 
-                            <p:commandButton actionListener="#{eventController.create}" update="growl" value="Utwórz wydażenie" oncomplete="newE.hide()"/>                    
+                            <p:commandButton action="Administrative" actionListener="#{eventController.create}" update="growl" value="Utwórz wydażenie" oncomplete="newE.hide()"/>                    
                         </center>
                         </h:form>
                         </p:dialog>     
@@ -76,22 +83,78 @@
                     
                     <p:dialog header="Usuń wybrane wydzarzenia" widgetVar="dltE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
                         <h:form prependId="false">
-                        <p:pickList id="pickList" value="#{eventController.newestSet}"  
-                                var="event"  
-                                itemLabel="#{event.name}"  
-                                itemValue="#{event}" />
-                        <p:growl id="growl" showDetail="true"/>  
-                        <p:commandButton id="eSubmit" value="Zatwierdz" actionListener="#{eventController.deleteSelected}" oncomplete="dltE.hide()" update="growl"/>
+                     
+                            
+                            <p:dataList value="#{eventController.allApproved}" var="event" id="todel"  
+                            paginator="true" rows="5" effectSpeed="fast"  
+                            paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                            rowsPerPageTemplate="10,50,100" type="none">  
+
+                                <f:facet name="header">  
+                                    Wydarzenia do skasowania  
+                                </f:facet>  
+
+                                <p:column>  
+                                    <p:commandButton icon="ui-icon-search" title="Skasuj wybrane" action="#{eventController.deleteSelected(event)}" update="todel,:all"/>  
+                          
+                                    <h:outputText value="#{event.name} w #{event.placeid.name}" style="margin-left:10px" />  
+                                    <br />  
+                                </p:column>  
+                        </p:dataList>      
+                            
+                       
+                      
+                        <p:growl id="growl" showDetail="true"/>                          
+                        </h:form>
+                    </p:dialog>
+            
+            
+                    <p:dialog header="Akceptuj wybrane wydarzenia" widgetVar="accE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
+                        <h:form prependId="false">
+                     
+                            
+                            <p:dataList value="#{eventController.allNonApproved}" var="event" id="toacc"  
+                            paginator="true" rows="5" effectSpeed="fast"  
+                            paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                            rowsPerPageTemplate="10,50,100" type="none">  
+
+                                <f:facet name="header">  
+                                    Wydarzenia do akceptacji  
+                                </f:facet>  
+
+                                <p:column>  
+                                    <p:commandButton icon="ui-icon-check" title="Akceptuj wybrane" action="#{eventController.approveEvent(event)}" update="toacc,:all"/>  
+                          
+                                    <h:outputText value="#{event.name} w #{event.placeid.name} " style="margin-left:10px" />  
+                                    <br />  
+                                </p:column>  
+                            </p:dataList>      
+                          
                         </h:form>
                     </p:dialog>
                     
                     <p:dialog header="Edytuj wybrane wydarzenie" widgetVar="editE" effect="FADE" effectDuration="0.5" close="false" fixedCenter="true" resizable="true">
                     <h:form prependId="false" id="choosedEditList">
-                        <p:selectOneListbox id="scroll" value="#{eventController.choosen}" style="height:400px ;width:300px">  
-                            <f:selectItems value="#{eventController.newestSet.source}"  
-                                var="event" itemLabel="#{event.name}" itemValue="#{event}" />  
-                        </p:selectOneListbox>
-                        <p:commandButton id="editButton" value="Edytuj" update=":editDD:displayEdit" oncomplete="dlgEdit.show(),editE.hide()" />  
+                        
+                        
+                        <p:dataList value="#{eventController.allApproved}" id ="scroll" var="event" 
+                            paginator="true" rows="5" effectSpeed="fast"  
+                            paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                            rowsPerPageTemplate="10,50,100" type="none">  
+
+                                <f:facet name="header">  
+                                    Wydarzenia do edycji
+                                </f:facet>  
+
+                                <p:column>  
+                                    <p:commandButton icon="ui-icon-pencil" title="Edytuj wybrane" actionListener="#{eventController.choosen(event)}" oncomplete="dlgEdit.show(),editE.hide()" update="scroll"/>  
+                          
+                                    <h:outputText value="#{event.name} w {#{event.placeid.name}" style="margin-left:10px" />  
+                                    <br />  
+                                </p:column>  
+                        </p:dataList>
+                        
+                       
                          
                         
                     </h:form>
@@ -122,7 +185,7 @@
                                 <p:growl id="growl" showDetail="true"/>   
                             </h:panelGrid>
                             <center>
-                                <p:commandButton id="approveEditButton" value="Zatwierdź" actionListener="#{eventController.updateSelected}" update=":editDD:displayEdit, growl, :choosedEditList:scroll" oncomplete="dlgEdit.hide()" />
+                                <p:commandButton id="approveEditButton" value="Zatwierdź" action="#{eventController.updateSelected}" update=":editDD:displayEdit, growl, :choosedEditList:scroll" oncomplete="dlgEdit.hide()" />
                                 <p:commandButton id="cancelEditButton" value="Anuluj" update=":editDD:displayEdit" oncomplete="dlgEdit.hide()" />
                             </center>
                         </h:form>
@@ -150,7 +213,7 @@
                             
                                 <f:facet name="footer">  
                                     <p:commandButton value="Dodaj miejsce"   
-                                            actionListener="#{placeController.create}"   
+                                            action="#{placeController.create}"   
                                             update="messages"   
                                             oncomplete="dlg.hide();"                                            
                                             />  

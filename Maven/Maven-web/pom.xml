@@ -25,7 +25,14 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Maven-ejb</artifactId>
             <version>${project.version}</version>
-        </dependency>        
+        </dependency>     
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1</version>
+            
+        </dependency>
+            
         <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>jackson-core-asl</artifactId>
@@ -84,6 +91,12 @@
             <artifactId>primefaces</artifactId>  
             <version>3.2</version>  
         </dependency> 
+        
+        <dependency>
+            <groupId>net.java.dev.rome</groupId>
+            <artifactId>rom</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

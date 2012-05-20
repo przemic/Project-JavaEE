@@ -24,10 +24,25 @@
             <to-view-id>/event/Administrative.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+      
+      
+        <navigation-case>
+            <from-outcome>CreateProposed</from-outcome>
+            <from-action>/event/CreateProposed</from-action>
+            <to-view-id>/event/CreateProposed.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
         
         <navigation-case>
             <from-outcome>EventList</from-outcome>
             <to-view-id>/event/List.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>FeedEvents</from-outcome>
+            <from-action>/event/FeedEvents.xhtml</from-action>
+            <to-view-id>/event/FeedEvents.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         

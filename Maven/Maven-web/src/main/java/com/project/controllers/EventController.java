@@ -34,48 +34,67 @@ import org.primefaces.model.DualListModel;
 public class EventController implements Serializable {
 
     private Event current,choosen;
+    private List<Event> choosenList;
     private DataModel items = null;
     @EJB
     private com.project.fascades.EventFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private DualListModel<Event> newestSet,oldestSet,allSet; 
+    private List<Event> newestSet,oldestSet,allSet; 
     private List<Event> toDelete;
 
     private String currentCommentText;
     public EventController() {
         toDelete = new  ArrayList<Event>();
-        currentCommentText = "";
+        currentCommentText = "";  
         choosen = new Event();
     }
 
-    public void approveEvent(Event event){
-        Short app = 1;
-        event.setApproved(app);
+    public String approveEvent(Event event){
+        try {                                  
+            event.setApproved(Short.valueOf("1"));
+            ejbFacade.edit(event);           
+            JsfUtil.addSuccessMessage("Zaakceptowano wydarzenie");
+            toDelete = null;
+            newestSet = null;
+            return "Administrative";
+            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, "Nie udało się zaakceptować wydarzeń");
+            return null;
+        }
+
+    }
+    
+    public List<Event> getChoosenList(){
+        return choosenList;
+    }
+    
+    public void setChoosenList(List<Event> choosenList){
+        this.choosenList = choosenList;
     }
     
     public Event getChoosen(){
         return choosen;
     }
     
-   
-    
-    
-    public void setChoosen(Event choosen){
-        this.choosen = choosen;
+    public void setChoosen(Event event){
+        this.choosen = event;
     }
-    public void deleteSelected(){
-        try {           
+    public String deleteSelected(Event event){
+        try {                                  
+            event.setApproved(Short.valueOf("0"));
+            ejbFacade.edit(event);           
+            JsfUtil.addSuccessMessage("Usunięto wybrane wydarzenia");
+            toDelete = null;
+            newestSet = null;
+            return "Administrative";
             
-            for(Event ev: newestSet.getTarget()){
-                ejbFacade.remove((Event)ev);
-            }
-            JsfUtil.addSuccessMessage("Usunięto wybrane wydarzenia");  
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "Nie udało się usunąć wydarzeń");
+            return null;
         }
-        toDelete = null;
-        newestSet = null;
+        
     }
     
     public Collection<User> getAttendiesForEvent(Event event){
@@ -86,23 +105,23 @@ public class EventController implements Serializable {
          try {
             getFacade().edit(choosen);
             JsfUtil.addSuccessMessage("Pomyślnie zaktualizowano wydarzenie");
-            return "View";
+            return "Administrative";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "Nie udało się zaktualizować wyadarzenia");
             return null;
         }
     }
-    public DualListModel<Event> getNewestSet(){
+    public Collection<Event> getNewestSet(){
         int size = ejbFacade.count();
         int min = size -100;
         if(min<0){
             min=0;
         }        
-        newestSet= new DualListModel<Event>(ejbFacade.findRange(new int[]{min, size-1}),toDelete);
+        newestSet= (ejbFacade.findRange(new int[]{min, size-1}));
         return newestSet;
     }
     
-    public void setNewestSet(DualListModel<Event> newestSet){
+    public void setNewestSet(List<Event> newestSet){
         this.newestSet=newestSet;
     }
     
@@ -111,8 +130,12 @@ public class EventController implements Serializable {
         return (List<Event>)ejbFacade.findRange(new int[]{0, 100});
     }
     
-    public List<Event> getAll(){
-        return ejbFacade.findAll();
+    public List<Event> getAllApproved(){
+        return ejbFacade.getAllApproved();
+    }
+    
+    public List<Event> getAllNonApproved(){
+        return ejbFacade.getAllNonApproved();
     }
     public Event getSelected() {
         if (current == null) {
@@ -168,7 +191,19 @@ public class EventController implements Serializable {
         return "Create";
     }
 
+    public String createProposed(){
+        current.setApproved(Short.valueOf("0"));
+        try {
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage("Utworzono nowe wydarzenie.");
+            return prepareCreate();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e,"Nie udało się utworzyć wydarzenia.");
+            return null;
+        }
+    }
     public String create() {
+        current.setApproved(Short.valueOf("1"));
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage("Utworzono nowe wydarzenie.");

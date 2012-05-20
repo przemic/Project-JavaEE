@@ -18,7 +18,7 @@
         
         <h:form>  
   
-    <p:dataGrid var="item" value="#{eventController.getAll()}" columns="5"  
+    <p:dataGrid var="item" value="#{eventController.getAllApproved()}" columns="5"  
         rows="20" paginator="true"  
         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
         rowsPerPageTemplate="20" emptyMessage="Brak wydarzeń"  >  
