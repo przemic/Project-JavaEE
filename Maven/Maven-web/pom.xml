@@ -94,7 +94,7 @@
         
         <dependency>
             <groupId>net.java.dev.rome</groupId>
-            <artifactId>rom</artifactId>
+            <artifactId>rome</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
