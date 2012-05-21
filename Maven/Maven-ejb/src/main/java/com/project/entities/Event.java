@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Event.findById", query = "SELECT e FROM Event e WHERE e.id = :id"),
     @NamedQuery(name = "Event.findByDate", query = "SELECT e FROM Event e WHERE e.date = :date"),
     @NamedQuery(name = "Event.findByAttendies", query = "SELECT e FROM Event e WHERE e.attendies = :attendies"),
-    @NamedQuery(name = "Event.findByApproved", query = "SELECT e FROM Event e WHERE e.approved = :approved")})
+    @NamedQuery(name = "Event.findByApproved", query = "SELECT e FROM Event e WHERE e.approved = :approved ORDER BY e.date DESC ")})
 public class Event implements Serializable {
     @Column(name =     "date")
     @Temporal(TemporalType.TIMESTAMP)

@@ -243,8 +243,21 @@ menu_buttons{
 .createLabel {
     font-weight: bold;
     font-size: 16px;
-    background-color: #0059d6;
+    background-color: #0050a5;
     color: white;
-    border-radius: 3px;
+    bor
+}
+.ui-datepicker-title {
+    line-height: 1.8em;
+    margin: 0 2.3em;
+    text-align: center;
+    color: #5B668E;
 }
 
+
+.ui-datagrid-column {
+    background: none repeat scroll 0 0 white;
+    border-color: white;
+    padding: 3px;
+    text-align: center;
+}

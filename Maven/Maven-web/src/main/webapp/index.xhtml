@@ -95,7 +95,7 @@
         <h:form id="editDD">
             <p:panelGrid id="displayEdit" style="text-align: left; margin-top: 8px; width: 100%">
                 <p:row>
-                    <p:column styleClass="createLabel" style="background-color: #0059d6">
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">
                         <h:outputLabel value="Nazwa wydarzenia:" for="name" style="font-weight: bold;"/>  
                     </p:column>
                     <p:column>
@@ -103,7 +103,7 @@
                     </p:column>
                 </p:row>
                 <p:row>
-                    <p:column styleClass="createLabel" style="background-color: #0059d6">
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">
                         <h:outputLabel value="Data wydarzenia" for="date" style="font-weight: bold;"/> 
                     </p:column>
                     <p:column>
@@ -111,7 +111,7 @@
                     </p:column>
                 </p:row>
                 <p:row>
-                    <p:column styleClass="createLabel" style="background-color: #0059d6">
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">
                         <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
                     </p:column>
                     <p:column>
@@ -121,7 +121,7 @@
             </p:panelGrid>                   
             <p:panelGrid style="width: 100%">
                 <p:row>
-                    <p:column styleClass="createLabel" style="background-color: #0059d6">    
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">    
                         <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;" />  
                     </p:column>
                     <p:column style="width: 30%;text-align: center">
@@ -205,7 +205,7 @@
         <h:form id="commForm">
             <p:panelGrid id="but" style="width: 100%;text-align: center;">
                 <p:row>  
-                    <p:column colspan="2" >                   
+                    <p:column >                   
                         <p:commandButton value="Dodaj komentarz" 
                                          actionListener="#{commentController.create(eventController.choosen, userController.getUserByName(facesContext.externalContext.userPrincipal.name))}"
                              
@@ -214,13 +214,10 @@
                     </p:column>
                 </p:row>
             </p:panelGrid>
-            <p:panelGrid id="pp" style="width: 100%" > 
-                <p:row>
+            <p:panelGrid id="pp" style="width: 100%;text-align: center;" > 
+                <p:row>                    
                     <p:column>
-                        <h:outputText value="#{facesContext.externalContext.userPrincipal.name}" id="city" style="font-weight: bold;" />
-                    </p:column>
-                    <p:column>
-                        <p:inputTextarea rows="3" cols="35" value="#{commentController.selected.descriptionText}"></p:inputTextarea>                                
+                        <p:inputTextarea rows="3" cols="20" value="#{commentController.selected.descriptionText}"></p:inputTextarea>                                
                     </p:column>
                 </p:row>
             </p:panelGrid>
@@ -228,10 +225,11 @@
             <p:dataGrid id="cmtList" var="item" value="#{commentController.getAllByEvent(eventController.choosen)}" columns="1"  
                 rows="5" paginator="true"  
                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
-                rowsPerPageTemplate="5" emptyMessage="Brak komentarzy"  >
-                <p:column>
+                rowsPerPageTemplate="5" emptyMessage="Brak komentarzy"  
+                style="width: 100%;text-align: center;">
+                <p:column style="width: 100%;text-align: center;">
                     <p:panel header="#{item.userid.login}" style="text-align:center; background-color: #e3e7ed;">
-                        <h:inputTextarea readonly="true" cols="35" rows="3" value="#{item.descriptionText}"/>
+                        <h:inputTextarea  readonly="true" cols="20" rows="3" value="#{item.descriptionText}"/>
                     </p:panel>
                 </p:column>
             </p:dataGrid>
