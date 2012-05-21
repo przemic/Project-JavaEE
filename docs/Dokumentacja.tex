@@ -387,21 +387,120 @@ operacji biznesowych.
 \end{center}
 \end{figure}
 
+\pagebreak
 
 \section{Dokumentacja aplikacji internetowej}
 
 \subsection{Wykorzystane środowisko programistyczne}
 
+Podczas tworzenia aplikacji zostały wykorzystane następujące narzędzia:
+\begin{itemize}
+ \item Zintegrowane środowisko programistyczne Netbeans w wersji 7.1.1
+ \item MySQL Workbench do zarządzania bazą danych
+ \item Serwer aplikacji Glassfish w wersji 3.1.2 (zintegrowany w naszym przypadku ze środowiskiem Netbeans)
+ \item Meaven - narzędzie do automatyzacji budowy projektu
+\end{itemize}
+
 \subsection{Wykorzystane technologie}
+Podczas tworzenia projektu zostały wykorzystane następujące technologie :
+\begin{itemize}
+ \item Język Java EE 6
+ \item Baza danych MySQL
+\end{itemize}
+
 
 \subsection{Wykorzystywane biblioteki oraz frameworki}
+Do stworzenia aplikacji wykorzystano następujące biblioteki oraz frameworki:
+\begin{itemize}
+ \item Biblioteka jdom w wersji 1.1
+ \item Biblioteka Rome w wersji 1.0.0
+ \item User Interface framework Primefaces w wersji 3.2 
+ \item User Interface framework JavaServer Faces w wersji 2.0
+\end{itemize}
+
+Wszystkie zmieszczone na powyższej liście biblioteki lub frameworki zostały dodane do pliku konfiguracyjnego 
+POM dla systemu budowania Meaven, dlatego też pobierane są automatycznie podczas pierwszego budowania projektu.
+Nie wymagana jest żadna ręczna instalacja dodatkowych komponentów.
+
+\subsection{Zmiany w stosunku do pierwotnej koncepcji}
+
+Ponieważ podczas podczas tworzenia aplikacji, możliwe było skonfrontowanie realnych wymagań oraz możliwości wymaganiami 
+założonymi na początku tworzenia projektu, poczyniono szereg zmian.
+Zmiany te dotyczyły zarówno dodatkowych funkcjonalności jak i tych które zostały usunięte względem pierwotnego projektu.
+
+\subsubsection{Funkcjonalności dodane podczas tworzenia projektu}
+Podczas rozwijania projektu zostały dodatkowo zaimplementowane, nie wymienione w wymaganiach funkcjonalności:
+\begin{enumerate}
+ \item Możliwość dodawania komentarzy oraz ich podglądu dla wydarzeń, przez zalogowanego użytkownika.
+ \item Możliwość potwierdzenia przyjścia na dane wydarzenie przez zalogowanego użytkownika.
+ \item Możliwość podglądu tego ile osób i jacy użytkownicy mają zamiar przyjść na dane wydarzenie.
+ \item Możliwość podglądu szczegółów zarówno wydarzenia jak i miejsca, w którym się odbywa.
+ \item Możliwość edycji wydarzeń oraz miejsc przez administratora. 
+\end{enumerate}
+\subsubsection{Funkcjonalności zmodyfikowane podczas tworzenia projektu}
+Podczas rozwijania projektu zostały zmodyfikowane lub usunięte następujące funkcjonalności:
+\begin{enumerate}
+ \item Możliwość podglądu wydarzeń najbliżej miejsca użytkownika - usunięcie zostało spowodowane zmianą charakteru aplikacji z ogólnej na 
+wydarzenia ściśle związane z Wrocławiem, a także duży nakład pracy na implementacje tej funkcjonalności.
+\item Możliwość przeszukiwania według miejsca została zmieniona z uwagi na brak sensu tego typu przeszukiwań w przypadku wydarzeń
+dla jedynie Wrocławia, pozostawiono przeszukiwanie według daty wydarzenia.
+\item Zmodyfikowano pobieranie informacji ze stron zewnętrznych, z parsowania stron na pobieranie informacji przy pomocy RSS.
+\end{enumerate}
+
 
 \subsection{Funkcjonalności aplikacji}
-\subsubsection{Z punktu widzenia zwykłego użytkownika}
+\subsubsection{Z punktu widzenia zwykłego, niezalogowanego użytkownika}
+Funkcjonalności niezalogowanego użytkownika :
+\begin{itemize}
+ \item Przeglądnie wydarzeń na stronie głównej według daty wydarzenia.
+ \item Sprawdzanie informacji na temat tego kto przychodzi na dane wydarzenie.
+ \item Sprawdzanie szczegółów wydarzenia oraz miejsca wydarzenia.
+ \item Rejestracja jako nowy użytkownik.
+ \item Logowanie w przypadku posiadania konta.
+\end{itemize}
+\subsubsection{Z punktu widzenia zwykłego, zalogowanego użytkownika}
+Funkcjonalności zwykłego, zalogowanego użytkownika :
+\begin{itemize}
+ \item Przeglądnie wydarzeń na stronie głównej według daty wydarzenia.
+ \item Sprawdzanie informacji na temat tego kto przychodzi na dane wydarzenie.
+ \item Sprawdzanie szczegółów wydarzenia oraz miejsca wydarzenia.
+ \item Rejestracja jako nowy użytkownik.
+ \item Dodawanie komentarzy dla wydarzenia oraz ich podgląd. 
+ \item Dodawanie oraz usuwanie wydarzeń ulubionych.
+ \item Potwierdzanie przybycia na wydarzenie na stronie Moje wydarzenia.
+ \item Proponowanie nowych wydarzeń, które muszą zostać zatwierdzone przez administratora.
+ \item Podgląd informacji o wydarzeniach ze stron o Wrocławiu.
+\end{itemize}
+
 
 \subsubsection{Z punktu widzenia administratora}
+Funkcjonalności zalogowanego użytkownika administratora :
+\begin{itemize}
+ \item Przeglądnie wydarzeń na stronie głównej według daty wydarzenia.
+ \item Sprawdzanie informacji na temat tego kto przychodzi na dane wydarzenie.
+ \item Sprawdzanie szczegółów wydarzenia oraz miejsca wydarzenia.
+ \item Dodawanie komentarzy dla wydarzenia oraz ich podgląd. 
+ \item Dodawanie oraz usuwanie wydarzeń ulubionych.
+ \item Potwierdzanie przybycia na wydarzenie na stronie Moje wydarzenia.
+ \item Podgląd informacji o wydarzeniach ze stron o Wrocławiu.
+ \item Dodawanie nowych wydarzeń.
+ \item Dodawanie nowych miejsc poprzez kliknięcie na mapie.
+ \item Zatwierdzanie wydarzeń zaproponowanych przez użytkowników.
+ \item Edycja miejsc.
+ \item Edycja wydarzeń.
+\end{itemize}
 
+\pagebreak
 \subsection{Widoki aplikacji}
+Na rysunku \ref{widok} został pokazany widok strony z punktu widzenia strony głównej.
+
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[width=\textwidth]{screen1.png}
+  \caption{Widok strony z punktu widzenia strony głównej.
+  \label{widok}}
+\end{center}
+\end{figure}
 
 \section{Dokumentacja aplikacji mobilnej}
 
