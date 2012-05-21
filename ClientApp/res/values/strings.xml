@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <string name="app_name">Impreza z kulturą</string>
+    <string name="my_events">Moje wydarzenia</string>
+    <string name="choose_city">Choose city</string>
+    <string name="city_info">City info</string>
+    <string name="people_number">Number of people</string>
+    <string name="drink_cost">Drink cost</string>
+    <string name="man_woman">Man/Woman</string>
+    <string name="siting_places">Free siting places</string>
+    <string name="entrance_fee">Entrance fee</string>
+    <string name="smoking_places">Smoking places</string>
+    <string name="events">Wszystkie wydarzenia</string>
+	<string name="club_incorrect_address">Incorrect address</string>
+	<string name="club_ok">Club has been added successfully. Thank you.</string>
+	<string name="club_exists">The same club already exists in our database.</string>
+	<string name="club_bad_data">Incorrect data. Please fill all inputs.</string>
+	<string name="club_name_label">Name</string>
+	<string name="club_desc_label">Description</string>
+	<string name="club_address_label">Address</string>
+	<string name="club_add_label">Add</string>
+	<string name="club_add_dialog_name">Add club</string>
+	<string name="event_name">Wydarzenie:</string>
+	<string name="event_desc">Opis:</string>
+	<string name="event_date">Data:</string>
+	<string name="event_place">Miejsce:</string>
+	<string name="add_to_favourite">Dodaj do moich wydarzeń</string>
+	<string name="remove_from_favourite">Usuń z moich wydarzeń</string>
+	
+</resources>

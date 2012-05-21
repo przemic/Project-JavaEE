@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style parent="@android:style/TextAppearance" name="category_names">
+    	<item name="android:textColor">#ffd800</item>   
+    	<item name="android:textStyle">bold</item> 
+    	<item name="android:paddingLeft">8dip</item>
+    	<item name="android:textSize">16dip</item>
+    	<item name="android:layout_centerInParent">true</item>
+    </style>
+</resources>
