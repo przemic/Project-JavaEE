@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"  >
+<h:body>
+<ui:composition template="../mainTemplate.xhtml" >
+ 
+
+    <ui:define name="content">
+         <div id="pageTitle">
+           <h1>Dodaj wydarzenie</h1>
+        </div>
+        <div>
+             <h:form id="createF">
+            <p:panelGrid id="creation" style="width: 100%;text-align: left">                
+                                 
+                <f:facet name="header">  
+                        <p:row>
+                            <p:column colspan="2" style="font-size: 16px;background-color: #0050a5;">
+                                Dane nowego wydarzenia  
+                            </p:column>
+                        </p:row>
+                        
+                    </f:facet> 
+                    <p:row>
+                        <p:column styleClass="createLabel" style="background-color: #0050a5">
+                            <h:outputLabel value="Nazwa wydarzenia:" for="name"  />
+                        </p:column>
+                        <p:column styleClass="createLabel" style="background-color: #0050a5">
+                              <center>Kliknij na mapie aby dodać nowe miejsce  </center>
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column style="text-align: center">
+                            <p:inputTextarea rows="2" cols="70"  id="name" value="#{eventController.selected.name}" title="#{bundle.CreateEventTitle_name}" />
+                        </p:column>
+                        <p:column rowspan="11" style="font-weight: bold;text-align: center;width: 600px">
+                            <p:gmap id="gmap" center="51.11014019830254,17.032142151061976" zoom="13" type="HYBRID"   
+                                style="width:600px;height:400px"  
+
+                                onPointClick="handlePointClick(event);"   
+                                widgetVar="map" />  
+                        </p:column> 
+                    </p:row>
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">
+                        <h:outputLabel value="Wybór daty wydarzenia:" for="date" style="font-weight: bold;"/> 
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center">
+                         <p:calendar value="#{eventController.selected.date}" pattern="MM/dd/yyyy HH:mm" >  
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+
+                        </p:calendar>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">
+                         <h:outputLabel value="Opis wydarzenia" for="descriptionText" style="font-weight: bold;"/>
+                    </p:column>
+                </p:row> 
+                <p:row>
+                    <p:column style="text-align: center">
+                        <p:inputTextarea rows="4" cols="70" id="descriptionText" value="#{eventController.selected.descriptionText}" title="#{bundle.CreateEventTitle_descriptionText}" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column styleClass="createLabel" style="background-color: #0050a5">
+                         <h:outputLabel value="Miejse w którym odbywać ma się wydarzenie:" for="placeid" style="font-weight: bold;"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center">
+                        <h:selectOneMenu id="placeid" value="#{eventController.selected.placeid}" title="#{bundle.CreateEventTitle_placeid}" required="true" requiredMessage="#{bundle.CreateEventRequiredMessage_placeid}">
+                            <f:selectItems value="#{placeController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>                        
+                    </p:column>
+                </p:row> 
+                <p:row>
+                    <p:column rowspan="5" style="text-align: center">
+                        <h:commandButton action="#{eventController.createProposed}" value="Utwórz wydarzenie" style="font-weight: bold;"/>
+                    </p:column>
+                </p:row>
+                
+                
+            </p:panelGrid>
+            </h:form>
+        </div>
+                     
+           
+    </ui:define>
+  
+
+    
+
+</ui:composition>
+ </h:body>
+ 
+</html>

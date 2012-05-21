@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <application>
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+    </application>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>        
+         <navigation-case>
+            <from-outcome>Create</from-outcome>
+            <to-view-id>/event/Create.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Administrative</from-outcome>/
+            <to-view-id>/event/Administrative.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+      
+      
+        <navigation-case>
+            <from-outcome>CreateProposed</from-outcome>
+            <from-action>/event/CreateProposed</from-action>
+            <to-view-id>/event/CreateProposed.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>EventList</from-outcome>
+            <to-view-id>/event/List.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>FeedEvents</from-outcome>
+            <from-action>/event/FeedEvents.xhtml</from-action>
+            <to-view-id>/event/FeedEvents.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>MyEvent</from-outcome>
+            <to-view-id>/event/MyEventList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+       
+        
+        <navigation-case>
+            <from-outcome>CreateUser</from-outcome>
+            <to-view-id>/user/Create.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>Login</from-outcome>
+            <to-view-id>/auth/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <from-view-id>/event/Administrative.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>EventList</from-outcome>
+            <to-view-id>/event/List.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/event/Administrative.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>EventList</from-outcome>
+            <to-view-id>/event/List.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+         <from-view-id>/login.xhtml</from-view-id>
+    </navigation-rule>
+    
+   
+    
+    
+</faces-config>

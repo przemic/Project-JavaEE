@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPlaceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPlaceLabel_id}"/>
+                    <h:outputText value="#{placeController.selected.id}" title="#{bundle.ViewPlaceTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_name}"/>
+                    <h:outputText value="#{placeController.selected.name}" title="#{bundle.ViewPlaceTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_longitude}"/>
+                    <h:outputText value="#{placeController.selected.longitude}" title="#{bundle.ViewPlaceTitle_longitude}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_latitude}"/>
+                    <h:outputText value="#{placeController.selected.latitude}" title="#{bundle.ViewPlaceTitle_latitude}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_streetName}"/>
+                    <h:outputText value="#{placeController.selected.streetName}" title="#{bundle.ViewPlaceTitle_streetName}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_buildingNumber}"/>
+                    <h:outputText value="#{placeController.selected.buildingNumber}" title="#{bundle.ViewPlaceTitle_buildingNumber}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_flatNumber}"/>
+                    <h:outputText value="#{placeController.selected.flatNumber}" title="#{bundle.ViewPlaceTitle_flatNumber}"/>
+                    <h:outputText value="#{bundle.ViewPlaceLabel_city}"/>
+                    <h:outputText value="#{placeController.selected.city}" title="#{bundle.ViewPlaceTitle_city}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{placeController.destroyAndView}" value="#{bundle.ViewPlaceDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewPlaceEditLink}"/>
+                <br />
+                <h:commandLink action="#{placeController.prepareCreate}" value="#{bundle.ViewPlaceCreateLink}" />
+                <br />
+                <h:commandLink action="#{placeController.prepareList}" value="#{bundle.ViewPlaceShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewPlaceIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

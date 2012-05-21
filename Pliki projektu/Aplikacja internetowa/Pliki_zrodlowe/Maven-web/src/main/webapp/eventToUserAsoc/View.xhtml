@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewEventToUserAsocTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewEventToUserAsocLabel_attendance}"/>
+                    <h:outputText value="#{eventToUserAsocController.selected.attendance}" title="#{bundle.ViewEventToUserAsocTitle_attendance}"/>
+                    <h:outputText value="#{bundle.ViewEventToUserAsocLabel_id}"/>
+                    <h:outputText value="#{eventToUserAsocController.selected.id}" title="#{bundle.ViewEventToUserAsocTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewEventToUserAsocLabel_userid}"/>
+                    <h:outputText value="#{eventToUserAsocController.selected.userid}" title="#{bundle.ViewEventToUserAsocTitle_userid}"/>
+                    <h:outputText value="#{bundle.ViewEventToUserAsocLabel_eventid}"/>
+                    <h:outputText value="#{eventToUserAsocController.selected.eventid}" title="#{bundle.ViewEventToUserAsocTitle_eventid}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{eventToUserAsocController.destroyAndView}" value="#{bundle.ViewEventToUserAsocDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewEventToUserAsocEditLink}"/>
+                <br />
+                <h:commandLink action="#{eventToUserAsocController.prepareCreate}" value="#{bundle.ViewEventToUserAsocCreateLink}" />
+                <br />
+                <h:commandLink action="#{eventToUserAsocController.prepareList}" value="#{bundle.ViewEventToUserAsocShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewEventToUserAsocIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
