@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+<ui:composition template="../mainTemplate.xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+
+    <ui:define name="content">
+        
+            
+            <h:form>
+                <p:panelGrid style="width: 50%;text-align: left;margin-left: 90px">
+                    <f:facet name="header" >
+                        <p:row>
+                            <p:column colspan="2" style="font-size: 16px;background-color: #0059d6;">
+                                Wypełnij formularz logowania
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Imię" for="name" style="font-weight: bold;"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="name" value="#{userController.selected.name}" title="Imię" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Nazwisko" for="surname" style="font-weight: bold;"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="surname" value="#{userController.selected.surname}" title="Nazwisko" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Data urodzenia" for="birthDate" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>                    
+                            <p:calendar value="#{userController.selected.birthDate}" pattern="MM/dd/yyyy" >  
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </p:calendar>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Hasło" for="password" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:password id="pass" value="#{userController.selected.password}" feedback="true"   
+                                promptLabel="Proszę podaj hasło" weakLabel="Słąbe hasło"  
+                        goodLabel="Średnie hasło" strongLabel="Mocne hasło"/>
+                           
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Login" for="login" style="font-weight: bold;"/>
+                        </p:column>
+                        <p:column> 
+                            <p:inputText rows="1" cols="30" id="login" value="#{userController.selected.login}" title="Login" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" style="width: 100%;text-align: center;margin-left: 90px">
+                               <p:messages />  
+                               <center>
+                                <p:captcha label="Captcha" language="tr" theme="white" publicKey="6Ld7pMESAAAAAHd1VihJkqPUXAJVwU3Cghc8fzrq"/>  
+                               </center>
+                                <p:commandButton value="Utwórz konto" ajax="false"  
+                                                 actionListener="#{userController.submit}" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <br />
+                
+                <h:commandLink action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
+                
+            </h:form>
+       
+    </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

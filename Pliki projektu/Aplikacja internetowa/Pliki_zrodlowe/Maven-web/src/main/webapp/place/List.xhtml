@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPlaceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListPlaceEmpty}" rendered="#{placeController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{placeController.items.rowCount > 0}">
+                    <h:outputText value="#{placeController.pagination.pageFirstItem + 1}..#{placeController.pagination.pageLastItem + 1}/#{placeController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{placeController.previous}" value="#{bundle.Previous} #{placeController.pagination.pageSize}" rendered="#{placeController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{placeController.next}" value="#{bundle.Next} #{placeController.pagination.pageSize}" rendered="#{placeController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{placeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_longitude}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.longitude}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_latitude}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.latitude}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_streetName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.streetName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_buildingNumber}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.buildingNumber}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_flatNumber}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.flatNumber}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlaceTitle_city}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.city}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{placeController.prepareView}" value="#{bundle.ListPlaceViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{placeController.prepareEdit}" value="#{bundle.ListPlaceEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{placeController.destroy}" value="#{bundle.ListPlaceDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{placeController.prepareCreate}" value="#{bundle.ListPlaceCreateLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ListPlaceIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPlaceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{placeController.selected.id}" title="#{bundle.EditPlaceTitle_id}" required="true" requiredMessage="#{bundle.EditPlaceRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_name}" for="name" />
+                    <h:inputTextarea rows="4" cols="30" id="name" value="#{placeController.selected.name}" title="#{bundle.EditPlaceTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_longitude}" for="longitude" />
+                    <h:inputTextarea rows="4" cols="30" id="longitude" value="#{placeController.selected.longitude}" title="#{bundle.EditPlaceTitle_longitude}" />
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_latitude}" for="latitude" />
+                    <h:inputTextarea rows="4" cols="30" id="latitude" value="#{placeController.selected.latitude}" title="#{bundle.EditPlaceTitle_latitude}" />
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_streetName}" for="streetName" />
+                    <h:inputTextarea rows="4" cols="30" id="streetName" value="#{placeController.selected.streetName}" title="#{bundle.EditPlaceTitle_streetName}" />
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_buildingNumber}" for="buildingNumber" />
+                    <h:inputText id="buildingNumber" value="#{placeController.selected.buildingNumber}" title="#{bundle.EditPlaceTitle_buildingNumber}" />
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_flatNumber}" for="flatNumber" />
+                    <h:inputText id="flatNumber" value="#{placeController.selected.flatNumber}" title="#{bundle.EditPlaceTitle_flatNumber}" />
+                    <h:outputLabel value="#{bundle.EditPlaceLabel_city}" for="city" />
+                    <h:inputTextarea rows="4" cols="30" id="city" value="#{placeController.selected.city}" title="#{bundle.EditPlaceTitle_city}" />
+                </h:panelGrid>
+                <h:commandLink action="#{placeController.update}" value="#{bundle.EditPlaceSaveLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="View" value="#{bundle.EditPlaceViewLink}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{placeController.prepareList}" value="#{bundle.EditPlaceShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.EditPlaceIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

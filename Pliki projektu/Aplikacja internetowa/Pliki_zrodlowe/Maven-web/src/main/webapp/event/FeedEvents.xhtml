@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"  >
+<h:body>
+<ui:composition template="../mainTemplate.xhtml" >
+ 
+
+    <ui:define name="content">
+         <div id="pageTitle">
+           <h1>Dodaj wydarzenie</h1>
+        </div>
+        <div>
+            <p:feedReader size="10" value="http://naszemiasto.feedsportal.com/c/32979/f/535658/index.rss" var="feed">  
+                <h:outputText value="#{feed.title}" style="font-weight: bold"/>  
+                <br />  
+                <h:outputText value="#{feed.description.value}" escape="false"/>  
+                <p:separator />  
+            </p:feedReader>
+        </div>   
+           
+    </ui:define>
+  
+
+    
+
+</ui:composition>
+ </h:body>
+ 
+</html>

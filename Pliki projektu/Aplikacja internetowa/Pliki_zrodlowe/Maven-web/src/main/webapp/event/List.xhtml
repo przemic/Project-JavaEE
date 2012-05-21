@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./mainTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    
+    <ui:define name="content">
+       <div id="pageTitle">
+           <h1>Najnowsze wydarzenia</h1>
+       </div> 
+         
+       <h:form styleClass="jsfcrud_list_form">
+                
+                <h:outputText escape="false" value="#{bundle.ListEventEmpty}" rendered="#{eventController.items.rowCount == 0}"/>
+                <h:panelGroup id="mainG" rendered="#{eventController.items.rowCount > 0}">
+                    <h:outputText value="#{eventController.pagination.pageFirstItem + 1}..#{eventController.pagination.pageLastItem + 1}/#{eventController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{eventController.previous}" value="#{bundle.Previous} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{eventController.next}" value="#{bundle.Next} #{eventController.pagination.pageSize}" rendered="#{eventController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable id="dataTab" value="#{eventController.items}" var="item" class="event_list" style="border-color: white;border-width: 5px" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" >
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Wydarzenie"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Krótki opis"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descriptionText}"/>
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Miejsce"/>
+                            </f:facet>
+                            <h:outputText value="#{item.placeid.name}"/>
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data"/>
+                            </f:facet>
+                            <h:outputText value="#{item.date}"/>
+                        </h:column>
+                        
+                        <h:column rendered="#{facesContext.externalContext.userPrincipal.name != NULL}">
+                            <f:facet name="header">
+                                <h:outputText value="Dodaj"/>
+                            </f:facet>
+                            <p:commandButton   update="editDialog" value="Edytuj" immediate="true" onclick="dlg.show()"/>
+                            
+                            <p:dialog header="Edycja wydarzenia" widgetVar="dlg" resizable="true">  
+                                <h:form id="form">  
+
+                                    <h:panelGrid columns="2" style="margin-bottom:10px">  
+                                        <h:outputLabel for="name" value="Nazwa" />  
+                                        <p:inputText id="name" value="#{item.name}" />  
+                                    </h:panelGrid>  
+
+                                    <p:commandButton id="submitButton" value="Edytuj" update=":dataTab" oncomplete="dlg.hide();"/>  
+
+                                </h:form>  
+                            </p:dialog> 
+                        </h:column>
+                        
+                        
+                         
+                    </h:dataTable>
+                    
+                </h:panelGroup>
+                <br />
+                <h:panelGroup rendered="#{(facesContext.externalContext.userPrincipal.name != NULL)}">
+                    <h:commandLink  action="#{eventController.prepareCreate}"  rendered="#{userController.isAdmin(facesContext.externalContext.userPrincipal.name)}" value="#{bundle.ListEventCreateLink}"/>
+                </h:panelGroup>
+                <br />
+                <br />                
+            </h:form>       
+
+    </ui:define>
+
+               
+
+</ui:composition>
+
+</html>
