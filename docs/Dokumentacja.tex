@@ -497,8 +497,8 @@ Na rysunku \ref{widok} został pokazany widok strony z punktu widzenia strony g�
 \begin{figure}[!h]
 \begin{center}
   \includegraphics[width=\textwidth]{screen1.png}
-  \caption{Widok strony z punktu widzenia strony głównej.}
-  \label{widok}
+  \caption{Widok strony z punktu widzenia strony głównej.
+  \label{widok}}
 \end{center}
 \end{figure}
 
@@ -506,14 +506,50 @@ Na rysunku \ref{widok} został pokazany widok strony z punktu widzenia strony g�
 
 \subsection{Wykorzystane środowisko programistyczne}
 
-\subsection{Wykorzystane technologie}
+Do stworzenia aplikacji mobilnej należało przygotować odpowiednie środowisko programistyczne. W jego skład wchodziły takie elementy jak:
+JAVA 6 JDK, zintegrowane środowisko programistyczne Eclipse Indigo w wersji 3.7.1 oraz Android SDK rewizja 19.
 
-\subsection{Wykorzystywane biblioteki oraz frameworki}
+\subsection{Wykorzystane technologie, biblioteki oraz frameworki}
+
+Aplikacja mobilna łączy się z serwerem aplikacji za pomocą interfejsu REST. Dane z serwera aplikacji przesyłane są do aplikacji mobilnej w lekkim formacie 
+wymiany danych tekstowych JSON. W aplikacji wykorzystano Android API w wersji 7 na systemy Android 2.1. Do wyświetlania w aplikacji mapy wykorzystano 
+API Google Maps. Aby parsować stringi JSON na obiekty DAO Javy oraz odwrotnie obiekty DAO Javy na stringi JSON wykorzystano bibliotekę gson w wersji 1.6.
 
 \subsection{Funkcjonalności aplikacji}
 
+Aplikacja mobilna umożliwia użytkownikowi przeglądanie wszystkich wydarzeń dostępnych w bazie danych, jak również wydarzeń ulubionych. W głownym menu istnieje możliwość wyboru pomiędzy wszystkimi wydarzeniami oraz wydarzeniami ulubionymi. Spośród wylistowanych wydarzeń można wybrać jedno, aby zobaczyć jego szczegóły. W widoku szczególowym wydarzenia użytkownik może wybrać dwie opcje. Pierwsza z nich to opcja prowadź, która pokazuje użytkownikowi mapę z wyznaczoną drogą od aktualnego położenia pobranego z GPS do miejsca odbywania się wydarzenia. Opcja druga w zależności od kontekstu (wydarzenie zostało wybrane z ulubionych lub z wszystkich) daje możliwość dodania do ulubionych oraz usunięcia z ulubionych.
+
 \subsection{Widoki aplikacji}
 
+Na rysunku \ref{android-menu} przedstawiono ekran główny aplikacji, gdzie użytkownik ma możliwość wyboru przeglądania wszystkich wydarzeń, bądź wydarzeń ulubionych.
+
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[width=5cm, height=8cm]{android-menu.png}
+  \caption{Aplikacja mobilna - menu główne
+  \label{android-menu}}
+\end{center}
+\end{figure}
+
+Na rysunku \ref{android-szczegoly} pokazano ekran przedstawiający szczegóły wybranego wydarzenia oraz opcje prowadzenia do wydarzenia oraz dodania wydarzenia do ulubionych.
+
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[width=5cm, height=8cm]{android-szczegoly.png}
+  \caption{Aplikacja mobilna - szczegółowy widok wydarzenia
+  \label{android-szczegoly}}
+\end{center}
+\end{figure}
+
+Na rysunku \ref{android-mapa} zaprezentowano zrzut ekranu pokazujący działanie funkcji wyznaczania trasy.
+
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[width=5cm, height=8cm]{android-mapa.png}
+  \caption{Aplikacja mobilna - widok mapy
+  \label{android-mapa}}
+\end{center}
+\end{figure}
 
 \end{document} 
 
