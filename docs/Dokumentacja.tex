@@ -93,6 +93,9 @@ Przy odpowiednich zmienionych wymaganiach zostały zamieszczone komentarze odno�
 \label{fun_int1}
 \end{table}
 
+Z uwagi na zmianę charakteru aplikacji, z nastawiania na wszelkie możliwe miejsca, na lokalizacje związane głównie z Wrocławiem, zrezygnowaliśmy z tej funkcjonalności.
+Nie da się ukryć, iż implementacja posiadałaby duży nakład niepotrzebnej pracy.
+
 
 \begin{table}[h!] 
 \centering
@@ -123,6 +126,10 @@ Przy odpowiednich zmienionych wymaganiach zostały zamieszczone komentarze odno�
 \label{fun_int3}
 \end{table}
 
+W wypadku tej funkcjonalności uproszczony został system przeglądania wydarzeń, możliwe jest przeglądanie ich zgodnie z chronologią 
+ich daty odbywania się, ma to związek z faktem braku odpowiedniego pola w bazie danych takiego jak kategoria wydarzenia, a także 
+z uwagami zamieszczonymi odnośnie wymaganiem pierwszym.
+
 \begin{table}[h!] 
 \centering
 \caption{Wymaganie funkcjonalne aplikacji internetowej FUN\_INT4}
@@ -151,6 +158,8 @@ Przy odpowiednich zmienionych wymaganiach zostały zamieszczone komentarze odno�
 \end{tabular}
 \label{fun_int5}
 \end{table}
+
+W celu ułatwienia dostępu dla użytkowników walidacja konta odbywa się poprzez captche, a nie jak początkowo zakładano poprzez email.
 
 
 \begin{table}[h!] 
@@ -188,6 +197,8 @@ Przy odpowiednich zmienionych wymaganiach zostały zamieszczone komentarze odno�
 \end{tabular}
 \label{fun_mob1}
 \end{table}
+
+Uwagi identyczne jak odnośnie analogicznego wymagania dla aplikacji internetowej.
 
 \begin{table}[h!] 
 \centering
@@ -278,6 +289,9 @@ Przy odpowiednich zmienionych wymaganiach zostały zamieszczone komentarze odno�
 \end{tabular}
 \label{nfun_int2}
 \end{table}
+W przypadku tego wymagania, zastosowano pobieranie wiadomości ze strony poświęconej Wrocławiu zamiast stron podanych w wymaganiach.
+Dodatkowo, jako że parsowanie stron takich jak Facebook lub CouchSurfing stanowi duży problem, funkcjonalności została zrealizowana przy pomocy czytnika RSS.
+
 \pagebreak
 \section{Wymagania techniczne}
 \subsection{Aplikacja internetowa}
