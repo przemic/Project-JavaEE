@@ -149,7 +149,7 @@ z uwagami zamieszczonymi odnośnie wymaganiem pierwszym.
 \centering
 \caption{Wymaganie funkcjonalne aplikacji internetowej FUN\_INT5}
 \begin{tabular}{|p{2cm}|p{12cm}|} \hline	
-	\multicolumn{2}{|>{\columncolor[gray]{.8}}c|}{Aplikacja umożliwia załorzenie konta dla użytkownika}\\
+	\multicolumn{2}{|>{\columncolor[gray]{.8}}c|}{Aplikacja umożliwia założenie konta dla użytkownika}\\
 	\hline ID & FUN\_INT5 \\ \hline \hline
 	 \multirow{2}{*}{Opis} &  Możliwe jest założenie konta przez użytkownika,
 	  oraz jego aktywacja poprzez email. \\
@@ -166,7 +166,7 @@ W celu ułatwienia dostępu dla użytkowników walidacja konta odbywa się poprz
 \centering
 \caption{Wymaganie funkcjonalne aplikacji internetowej FUN\_INT6}
 \begin{tabular}{|p{2cm}|p{12cm}|} \hline	
-	\multicolumn{2}{|>{\columncolor[gray]{.8}}c|}{Aplikacja umożliwia użytkownikowi dodawanie wydaerzeń do obserwowanych }\\ 
+	\multicolumn{2}{|>{\columncolor[gray]{.8}}c|}{Aplikacja umożliwia użytkownikowi dodawanie wydarzeń do obserwowanych }\\ 
 	\hline ID & FUN\_INT6 \\ \hline
 	 \hline \multirow{2}{*}{Opis} &  Możliwe jest dodawanie przez użytkownika 
 	 wydarzeń do ulubionych, a następnie ich podgląd na stronie konta użytkownika.
@@ -289,6 +289,7 @@ Uwagi identyczne jak odnośnie analogicznego wymagania dla aplikacji internetowe
 \end{tabular}
 \label{nfun_int2}
 \end{table}
+
 W przypadku tego wymagania, zastosowano pobieranie wiadomości ze strony poświęconej Wrocławiu zamiast stron podanych w wymaganiach.
 Dodatkowo, jako że parsowanie stron takich jak Facebook lub CouchSurfing stanowi duży problem, funkcjonalności została zrealizowana przy pomocy czytnika RSS.
 
@@ -357,6 +358,8 @@ Dodatkowo, jako że parsowanie stron takich jak Facebook lub CouchSurfing stanow
 \label{tech_mob2}
 \end{table}
 
+\newpage
+
 \section{Schemat bazy danych}
 Poniżej na rysunku \ref{baza} zamieszczony został schemat bazy danych, zawierającej wszystkie wymagane do działania aplikacji
 elementy.
@@ -371,7 +374,7 @@ Na podstawie poniższego schematu w dużej mierze oparta zostanie późniejsza a
 \end{center}
 \end{figure}
 
-\pagebreak
+\newpage
 \section{Diagram klas aplikacji}
 Poniższy diagram przedstawiony na rysunku \ref{klasy} pokazuje uproszczoną, abstrakcyjną strukturę aplikacji.
 Przedstawione na nim zależności pokazują strukturę w jakiej zorganizowany został przepływ danych w naszej aplikacji.
@@ -490,7 +493,6 @@ Funkcjonalności zalogowanego użytkownika administratora :
  \item Edycja wydarzeń.
 \end{itemize}
 
-\pagebreak
 \subsection{Widoki aplikacji}
 Na rysunku \ref{widok} został pokazany widok strony z punktu widzenia strony głównej.
 
@@ -501,6 +503,8 @@ Na rysunku \ref{widok} został pokazany widok strony z punktu widzenia strony g�
   \label{widok}}
 \end{center}
 \end{figure}
+
+\newpage
 
 \section{Dokumentacja aplikacji mobilnej}
 
@@ -517,7 +521,7 @@ API Google Maps. Aby parsować stringi JSON na obiekty DAO Javy oraz odwrotnie o
 
 \subsection{Funkcjonalności aplikacji}
 
-Aplikacja mobilna umożliwia użytkownikowi przeglądanie wszystkich wydarzeń dostępnych w bazie danych, jak również wydarzeń ulubionych. W głownym menu istnieje możliwość wyboru pomiędzy wszystkimi wydarzeniami oraz wydarzeniami ulubionymi. Spośród wylistowanych wydarzeń można wybrać jedno, aby zobaczyć jego szczegóły. W widoku szczególowym wydarzenia użytkownik może wybrać dwie opcje. Pierwsza z nich to opcja prowadź, która pokazuje użytkownikowi mapę z wyznaczoną drogą od aktualnego położenia pobranego z GPS do miejsca odbywania się wydarzenia. Opcja druga w zależności od kontekstu (wydarzenie zostało wybrane z ulubionych lub z wszystkich) daje możliwość dodania do ulubionych oraz usunięcia z ulubionych.
+Aplikacja mobilna umożliwia użytkownikowi przeglądanie wszystkich wydarzeń dostępnych w bazie danych, jak również wydarzeń ulubionych. W głównym menu istnieje możliwość wyboru pomiędzy wszystkimi wydarzeniami oraz wydarzeniami ulubionymi. Spośród wylistowanych wydarzeń można wybrać jedno, aby zobaczyć jego szczegóły. W widoku szczegółowym wydarzenia użytkownik może wybrać dwie opcje. Pierwsza z nich to opcja prowadź, która pokazuje użytkownikowi mapę z wyznaczoną drogą od aktualnego położenia pobranego z GPS do miejsca odbywania się wydarzenia. Opcja druga w zależności od kontekstu (wydarzenie zostało wybrane z ulubionych lub z wszystkich) daje możliwość dodania do ulubionych oraz usunięcia z ulubionych.
 
 \subsection{Widoki aplikacji}
 
